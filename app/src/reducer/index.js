@@ -26,6 +26,21 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 isLoading: true,
             };
+        case ADD_TODO :
+            return {
+                ...state,
+               
+            };
+        case EDIT_TODO :
+            return {
+                ...state,
+                
+            };
+        case DELETE_TODO :
+            return {
+                ...state,
+                
+            };
         case ACTION_SUCCESS :
             return {
                 ...state,
