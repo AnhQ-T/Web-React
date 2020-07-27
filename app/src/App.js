@@ -1,11 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Link, Route} from 'react-router-dom'
+import Signin from './components/Signin'
+import Login from './components/Login'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <span>lol</span>
+      <Link to='/sign-up'>Sign-Up</Link>
+      <Link to='/login'>Login</Link>
+      
+      <Route path='/sign-up'><Signin/></Route>
+      <Route path='/login'><Login/></Route>
     </div>
   );
 }
