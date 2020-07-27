@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-function Signin() {
+
+function Signup() {
   return (
     <div className="Signin">
       <span>lol</span>
@@ -19,4 +20,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps, 
   {  }
-)(Signin);
+)(Signup);
