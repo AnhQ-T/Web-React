@@ -1,22 +1,20 @@
 import {
     FETCH_TODO,
-    FETCH_TODO_SUCCESS,
-    FETCH_TODO_FAILURE,
-    DELETE_TODO,
-    DELETE_TODO_SUCCESS,
-    DELETE_TODO_FAILURE,
     ADD_TODO,
-    ADD_TODO_SUCCESS,
-    ADD_TODO_FAILURE,
     EDIT_TODO,
-    EDIT_TODO_SUCCESS,
-    EDIT_TODO_FAILURE,
-    TOGGLE_ACTIVE,
+    DELETE_TODO,
+    ACTION_SUCCESS,
+    ACTION_FAILURE,
+    TOGGLE_ADDING,
+    TOGGLE_EDITING,
+    TOGGLE_COMPLETED,
 } from '../actions';
 
 const initialState = {
     isLoading: false,
-    active: false,
+    isAdding: false,
+    isEditing: false,
+    isCompleted: false,
     data: [],
     error: '',
 };
@@ -28,23 +26,33 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 isLoading: true,
             };
-        case FETCH_TODO_SUCCESS :
+        case ACTION_SUCCESS :
             return {
                 ...state,
                 isLoading: false,
                 data: action.payload,
                 error: '',
             };
-        case FETCH_TODO_FAILURE :
+        case ACTION_FAILURE :
             return {
                 ...state,
                 isLoading: false,
                 error: action.payload,
             };
-        case TOGGLE_ACTIVE :
+        case TOGGLE_ADDING :
             return {
                 ...state,
-                active: !state.active,
+                isAdding: !state.isAdding,
+            };
+        case TOGGLE_EDITING :
+            return {
+                ...state,
+                isEditing: !state.isEditing,
+            };
+        case TOGGLE_COMPLETED :
+            return {
+                ...state,
+                isCompleted: !state.isCompleted,
             };
         default :
             return state;
