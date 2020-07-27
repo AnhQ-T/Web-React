@@ -1,12 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 
-function ToDoAdd() {
+function ToDoAddForm() {
   return (
     <div className="ToDoAdd">
       <span>lol</span>
     </div>
   );
-}
+};
 
-export default ToDoAdd;
+const mapStateToProps = state => {
+  return {
+
+  };
+};
+
+export default connect(
+  mapStateToProps, 
+  {  }
+)(ToDoAddForm);

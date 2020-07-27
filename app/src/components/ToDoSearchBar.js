@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 
 function ToDoSearchBar() {
@@ -7,6 +8,15 @@ function ToDoSearchBar() {
       <span>lol</span>
     </div>
   );
-}
+};
 
-export default ToDoSearchBar;
+const mapStateToProps = state => {
+  return {
+
+  };
+};
+
+export default connect(
+  mapStateToProps, 
+  {  }
+)(ToDoSearchBar);

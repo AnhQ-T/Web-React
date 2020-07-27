@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 
 function ToDoList() {
@@ -7,6 +8,15 @@ function ToDoList() {
       <span>lol</span>
     </div>
   );
-}
+};
 
-export default ToDoList;
+const mapStateToProps = state => {
+  return {
+
+  };
+};
+
+export default connect(
+  mapStateToProps, 
+  {  }
+)(ToDoList);
