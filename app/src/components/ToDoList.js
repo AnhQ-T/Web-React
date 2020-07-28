@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Axios from 'axios';
+import {axiosWithAuth as Axios} from '../utils';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ToDoEditForm from './ToDoEditForm';
@@ -19,12 +19,8 @@ import {
 
 
 function ToDoList(props) {
-  const [toDoList, setToDoList] = useState([])
+  const [list, setList] = useState([])
   let history = useHistory();
-
-  console.log(props.isAdding, 'is adding');
-  console.log(props.isEditing, 'is editing');
-  console.log(props.isCompleted);
 
   const addToDo = (e) => {
     e.preventDefault();
@@ -55,22 +51,29 @@ function ToDoList(props) {
   //   };
 
   // }, [props.isAdding]);
-
-  Axios.get('https://wunderlist2backend.herokuapp.com/')
+useEffect(() => {
+  
+  Axios().get('https://wunderlist2backend.herokuapp.com/api/users/1/lists/1/todos')
     .then(res => {
       console.log(res.data);
-      setToDoList(res)
+      setList(res.data)
     })
     .catch()
+
+}, [])
+
   return (
     <div className="ToDoList">
+
       {
-        toDoList.map( task => {
+        list.map( task => {
           return (
-            <ToDo task={task}/>
-            // <button onClick={addToDo}></button>
-            // <button onClick={editToDo}></button>
-            // <button onClick={markComplete}></button>
+            <>
+              <div>{task.todo}</div>
+              <button onClick={addToDo}>add</button>
+              <button onClick={editToDo}>edit</button>
+              <button onClick={markComplete}>complete</button>
+            </>
           )
         })
       }

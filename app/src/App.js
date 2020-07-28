@@ -24,6 +24,7 @@ function App() {
       <Route path='/edit'><ToDoEditForm/></Route>
       <Route path='/sign-up'><Signup/></Route>
       <Route path='/login'><Login/></Route>
+      <PrivateRoute path="/"><ToDoList/></PrivateRoute>
 
 
     </div>
