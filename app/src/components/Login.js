@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
-import React, {useState}from 'react';
-import { Link, Route, useHistory } from 'react-router-dom';
+import React, { useState, useEffect }from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaZavier'
 import { 
   loginUser,
 
-} 
-  from '../actions';
+} from '../actions';
 
 
 const initialFormErrors = {
@@ -68,9 +67,9 @@ function Login (props) {
     .validate(value)
 
     .then( () => {
-      setFormErrors({
-        ...formErrors,
-        [name]: "",
+      setCredentials({
+        ...credentials,
+        [name]: value,
       })
     })
     .catch(err => {
@@ -80,8 +79,8 @@ function Login (props) {
       })
     })
 
-    setFormValues({
-      ...formValues,
+    setCredentials({
+      ...credentials,
       [name]: value,
     });
   };
@@ -94,10 +93,10 @@ function Login (props) {
   };
 
   useEffect(() => {
-    formSchema.isValid(formValues).then(valid => {
+    formSchema.isValid(credentials).then(valid => {
       setDisabled(!valid)
     })
-  }, [formValues])
+  }, [credentials])
 
   return (
     <LoginBox>
@@ -110,8 +109,8 @@ function Login (props) {
                 type="text"
                 name="username"
                 onChange={onInputChange}
-                value={formValues.username}
-              ></input>
+                value={credentials.username}
+              />
             </label>
           </div>
           <div className='errors'>{formErrors.username}</div>
@@ -122,7 +121,7 @@ function Login (props) {
                 type="password"
                 name="password"
                 onChange={onInputChange}
-                value={formValues.password}
+                value={credentials.password}
               ></input>
             </label>
           </div>

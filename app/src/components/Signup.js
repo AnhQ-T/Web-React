@@ -3,18 +3,13 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Link, Route, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import * as yup from 'yup'
+import formSchema from '../validation/formSchemaAndre'
 import { 
   addUser,
 
 } 
   from '../actions';
-
-const initialFormValues = {
-  username: '',
-  // email: '',
-  password: '',
-  // verifyPassword: '',
-};
 
 const initialFormErrors = {
   username: '',
@@ -49,7 +44,6 @@ const SignUpBox = styled.div`
 `
 
 function Signup(props) {
-  const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
   const [credentials, setCredentials] = useState({
@@ -61,18 +55,41 @@ function Signup(props) {
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
-    
+
+    yup
+    .reach(formSchema, name)
+
+    .validate(value)
+
+    .then(valid => {
+      setCredentials({
+        ...credentials,
+        [name]: value,
+      })
+    })
+    .catch(err => {
+      setFormErrors({
+        ...formErrors,
+        [name]: err.errors[0],
+      })
+    })
     setCredentials({
       ...credentials,
       [name]: value,
-    });
+    })
   };
 
+
   const onSubmit = (evt) => {
+    console.log(evt);
     evt.preventDefault();
     console.log(credentials);
     props.addUser(credentials);
     history.push('/')
+    setCredentials({
+      ...credentials,
+      // [name]: '',
+    })
   }
 
   return (
@@ -85,8 +102,8 @@ function Signup(props) {
             type="text"
             name="username"
             onChange={onInputChange}
-            value={formValues.username}
-          ></input>
+            value={credentials.username}
+          />
         </div>
         <div className='errors'>{formErrors.username}</div>
 
@@ -97,7 +114,7 @@ function Signup(props) {
             name="email"
             onChange={onInputChange}
             value={credentials.email}
-          ></input>
+          />
         </div> */}
         {/* <div className='errors'>{formErrors.email}</div> */}
         <div>
@@ -107,7 +124,7 @@ function Signup(props) {
             name="password"
             onChange={onInputChange}
             value={credentials.password}
-          ></input>
+          />
         </div>
         <div className='errors'>{formErrors.password}</div>
         {/* <div>
@@ -116,7 +133,7 @@ function Signup(props) {
             type="password"
             name="verifyPassword"
             onChange={onInputChange}
-            value={formValues.verifyPassword}
+            value={credentials.verifyPassword}
           ></input>
         </div>
         <div className='errors'>{formErrors.verifyPassword}</div> */}

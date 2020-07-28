@@ -27,8 +27,8 @@ function ToDoEditForm() {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    console.log(props);
-    props.editToDo(props);
+    // console.log(props);
+    // props.editToDo(props);
   }
 
   const onInputChange = evt => {
