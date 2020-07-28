@@ -8,23 +8,19 @@ import {
 } 
   from '../actions';
 
-const initialFormValues = {
-  task: '',
-  description: '',
-}
 
 const initialFormErrors = {
   task: '',
   description: '',
 }
 
-function ToDoAddForm() {
-
-  const [formValues, setFormValues] = useState(initialFormValues)
+function ToDoAddForm (props) {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
-
-
+  const [formValues, setFormValues] = useState({
+    task: props.task,
+    description: props.description,
+  });
 
   const onInputChange = evt => {
     const { name, value } = evt.target
@@ -47,19 +43,19 @@ function ToDoAddForm() {
       ...formValues,
       [name]: value,
     });
-  }
+  };
 
   useEffect(() => {
     formSchema.isValid(formValues).then(valid => {
       setDisabled(!valid)
     })
-  }, [formValues])
+  }, [formValues]);
 
   const onSubmit = evt => {
     evt.preventDefault()
-    // console.log(props);
-    // props.addToDo(props);
-  }
+    console.log(props);
+    props.addToDo(formValues);
+  };
 
   return (
     <form classname = 'form-container' onSubmit = {onSubmit}>
@@ -96,7 +92,9 @@ function ToDoAddForm() {
 
 const mapStateToProps = state => {
   return {
-    
+    task: state.task,
+    description: state.description,
+
   };
 };
 

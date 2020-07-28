@@ -54,12 +54,6 @@ export const loginUser = ( credentials ) => {
   };
 };
 
-
-
-export const fetchToDo = () => {
-    // I'm going to show one of you how to do this, you'll need a GET request for MVP.
-};
-
 export const deleteToDo = () => {
     return dispatch => {
       dispatch({ type: DELETE_TODO});
@@ -75,11 +69,11 @@ export const deleteToDo = () => {
   };
 };
 
-export const addToDo = () => {
+export const addToDo = ( info ) => {
   return dispatch => {
     dispatch({ type: ADD_TODO});
     axiosWithAuth()
-      .post('/users/1/lists/3/todos')
+      .post('/users/1/lists/3/todos', info)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});
@@ -91,18 +85,18 @@ export const addToDo = () => {
   };
 };
 
-export const editToDo = () => {
+export const editToDo = ( info ) => {
   return dispatch => {
     dispatch({ type: EDIT_TODO});
     axiosWithAuth()
-      .put('/users/1/lists/1/todos/1')
+      .put('/users/1/lists/1/todos/1', info)
       .then(res => {
         console.log(res);
-        // dispatch({ type: ACTION_SUCCESS, payload: res.data});
+        dispatch({ type: ACTION_SUCCESS, payload: res.data});
       })
       .catch(err => {
         console.log(err);
-        // dispatch({ type: ACTION_FAILURE, payload: err.data });
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
     });
   };
 };

@@ -19,11 +19,13 @@ const initialFormErrors = {
   description: '',
 }
 
-function ToDoEditForm() {
-
-  const [formValues, setFormValues] = useState(initialFormValues)
+function ToDoEditForm ( props ) {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
+  const [formValues, setFormValues] = useState({
+    task: props.task,
+    description: props.description,
+  });
 
   const onSubmit = evt => {
     evt.preventDefault();

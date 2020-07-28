@@ -16,6 +16,8 @@ import {
 const initialState = {
     username: '',
     password: '',
+    task: '',
+    description: '',
     isLoading: false,
     isAdding: false,
     isEditing: false,
