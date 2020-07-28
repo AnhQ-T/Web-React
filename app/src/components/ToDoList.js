@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import ToDoEditForm from './ToDoEditForm';
+import ToDoAddForm from './ToDoAddForm';
 import { 
   toggleAdding,
   toggleEditing,
@@ -9,11 +11,34 @@ import {
   from '../actions';
 
 
-function ToDoList() {
+function ToDoList(props) {
+
+  const addToDo = (e) => {
+    e.preventDefault();
+    props.toggleAdding(props);
+  };
+
+  const editToDo = (e) => {
+    e.preventDefault();
+    props.toggleEditing(props);
+  };
+
+  const markComplete = (e) => {
+    e.preventDefault();
+    props.toggleCompleted(props);
+  };
+
   
+
+  useEffect();
+    
+
+
   return (
     <div className="ToDoList">
-      <span>lol</span>
+      <button onClick={addToDo}></button>
+      <button onClick={editToDo}></button>
+      <button onClick={markComplete}></button>
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import {
+    ADD_USER,
+    LOGIN_USER,
     FETCH_TODO,
     ADD_TODO,
     EDIT_TODO,
@@ -10,7 +12,16 @@ import {
     TOGGLE_COMPLETED,
 } from '../actions';
 
+const initialFormValues = {
+    username: '',
+    password: '',
+  };
+  
+
 const initialState = {
+    formValues: initialFormValues,
+    formErrors: initialFormValues,
+    credentials: initialFormValues,
     isLoading: false,
     isAdding: false,
     isEditing: false,
@@ -20,7 +31,18 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => {
+    console.log(action);
     switch (action.type) {
+        case ADD_USER :
+            return {
+                ...state,
+                credentials: action.payload,
+            };
+        case LOGIN_USER :
+            return {
+                ...state,
+                credentials: action.payload,
+            };
         case FETCH_TODO :
             return {
                 ...state,

@@ -1,7 +1,12 @@
 import { connect } from 'react-redux';
 import React, {useState}from 'react';
-import {Link, Route} from 'react-router-dom'
-import styled from 'styled-components'
+import {Link, Route} from 'react-router-dom';
+import styled from 'styled-components';
+import { 
+  loginUser,
+
+} 
+  from '../actions';
 
 
 const initialFormValues = {
@@ -40,7 +45,7 @@ const LoginBox = styled.div`
 
 `
 
-function Login() {
+function Login(props) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
@@ -54,11 +59,18 @@ function Login() {
     });
   };
 
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    console.log(props);
+    props.loginUser(formValues);
+  };
+
+
   return (
     <LoginBox>
       <div>
         <h2>Login</h2>
-        <form>
+        <form onSubmit={onSubmit}>
           <div>
             <div>
               <label className="labels">Username</label><br/>
@@ -82,12 +94,24 @@ function Login() {
             ></input>
           </div>
           <div className='errors'>{formErrors.password}</div>
-
-          <button className='btn' disabled={disabled}>Login</button>
+          <button className='btn' type='submit'>Login</button>
         </form>
       </div>
     </LoginBox>
   )
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    credentials: state.credentials,
+    
+  };
+};
+
+export default connect(
+  mapStateToProps, 
+  { 
+  loginUser,
+
+  
+})(Login);

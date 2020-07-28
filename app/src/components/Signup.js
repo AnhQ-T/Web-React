@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { 
+  addUser,
 
 } 
   from '../actions';
@@ -47,7 +48,7 @@ const SignUpBox = styled.div`
   }
 `
 
-function Signin() {
+function Signup(props) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
@@ -61,10 +62,15 @@ function Signin() {
     });
   };
 
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    props.addUser(formValues);
+  }
+
   return (
     <SignUpBox>
       <h2>Sign-Up</h2>
-      <form>
+      <form onSubmit={onSubmit}>
         <div>
           <label>Username</label><br />
           <input
@@ -106,7 +112,7 @@ function Signin() {
           ></input>
         </div>
         <div className='errors'>{formErrors.verifyPassword}</div>
-        <button className='btn' disabled={disabled}>Sign-Up</button>
+        <button className='btn' type='submit'>Sign-Up</button>
       </form>
     </SignUpBox>
   )
@@ -114,11 +120,11 @@ function Signin() {
 
 const mapStateToProps = state => {
   return {
-
+    credentials: state.credentials,
   };
 };
 
 export default connect(
   mapStateToProps, 
-  {  }
+  { addUser }
 )(Signup);
