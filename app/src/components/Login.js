@@ -1,15 +1,14 @@
 import { connect } from 'react-redux';
-import React, {useState, useEffect}from 'react';
-import {Link, Route} from 'react-router-dom'
-import styled from 'styled-components'
+import React, { useState, useEffect }from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import * as yup from 'yup'
-
 import formSchema from '../validation/formSchemaZavier'
+import { 
+  loginUser,
 
-const initialFormValues = {
-  username: '',
-  password: '',
-};
+} from '../actions';
+
 
 const initialFormErrors = {
   username: '',
@@ -47,10 +46,17 @@ const LoginBox = styled.div`
 
 `
 
-function Login() {
-  const [formValues, setFormValues] = useState(initialFormValues);
+
+
+function Login (props) {
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
+  const [credentials, setCredentials] = useState({
+    username: props.username,
+    password: props.password,
+  });
+
+  let history = useHistory();
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
@@ -61,9 +67,9 @@ function Login() {
     .validate(value)
 
     .then( () => {
-      setFormErrors({
-        ...formErrors,
-        [name]: "",
+      setCredentials({
+        ...credentials,
+        [name]: value,
       })
     })
     .catch(err => {
@@ -73,31 +79,38 @@ function Login() {
       })
     })
 
-    setFormValues({
-      ...formValues,
+    setCredentials({
+      ...credentials,
       [name]: value,
     });
   };
 
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    console.log(credentials);
+    props.loginUser(credentials);
+    history.push('/');
+  };
+
   useEffect(() => {
-    formSchema.isValid(formValues).then(valid => {
+    formSchema.isValid(credentials).then(valid => {
       setDisabled(!valid)
     })
-  }, [formValues])
+  }, [credentials])
 
   return (
     <LoginBox>
       <div>
         <h2>Login</h2>
-        <form>
+        <form onSubmit={onSubmit}>
           <div>
             <label className="labels">Username<br/>
               <input
                 type="text"
                 name="username"
                 onChange={onInputChange}
-                value={formValues.username}
-              ></input>
+                value={credentials.username}
+              />
             </label>
           </div>
           <div className='errors'>{formErrors.username}</div>
@@ -108,17 +121,29 @@ function Login() {
                 type="password"
                 name="password"
                 onChange={onInputChange}
-                value={formValues.password}
+                value={credentials.password}
               ></input>
             </label>
           </div>
           <div className='errors'>{formErrors.password}</div>
-
-          <button className='btn' disabled={disabled}>Login</button>
+          <button className='btn' type='submit'>Login</button>
         </form>
       </div>
     </LoginBox>
   )
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    username: state.username,
+    password: state.password,
+  };
+};
+
+export default connect(
+  mapStateToProps, 
+  { 
+  loginUser,
+
+  
+})(Login);

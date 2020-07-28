@@ -1,7 +1,10 @@
 import React from 'react';
-import {Link, Route} from 'react-router-dom'
-import Signup from './components/Signup'
-import Login from './components/Login'
+import {Link, Route} from 'react-router-dom';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import NavBar from './components/NavBar';
+import PrivateRoute from './components/PrivateRoute';
+import ToDoList from './components/ToDoList';
 import './App.css';
 
 

@@ -1,31 +1,28 @@
 import { connect } from 'react-redux';
+
 import React, { useState, useEffect } from 'react';
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
-
 import formSchema from '../validation/formSchemaZavier'
+import { 
+  addUser,
 
-const initialFormValues = {
-  username: '',
-  email: '',
-  password: '',
-  verifyPassword: '',
-};
+} 
+  from '../actions';
 
 const initialFormErrors = {
   username: '',
-  email: '',
+  // email: '',
   password: '',
-  verifyPassword: '',
+  // verifyPassword: '',
 };
 
 const SignUpBox = styled.div`
-  background: white;
-  color: black;
+  background: #7CAE7A;
   border-radius: 20px;
   width: 20%;
-  padding-bottom: 1.5%;
+  padding-bottom: 1%;
 
   form { 
     display: flex;
@@ -39,34 +36,36 @@ const SignUpBox = styled.div`
     border-radius: 4px;
   }
   .btn {
-    background: #7cae7a;
-    color: white;
+    background: #ed9b40;
     width: 20%;
     margin: 2%;
     border-radius: 4px;
   }
-  .errors{
-    color: red
-  }
 `
 
-function Signup() {
-  const [formValues, setFormValues] = useState(initialFormValues);
+function Signup(props) {
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
+  const [credentials, setCredentials] = useState({
+    username: props.username,
+    password: props.password,
+  });
+
+  let history = useHistory();
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
+    console.log(name, value);
 
     yup
     .reach(formSchema, name)
 
     .validate(value)
 
-    .then(valid => {
-      setFormErrors({
-        ...formErrors,
-        [name]: "",
+    .then(() => {
+      setCredentials({
+        ...credentials,
+        [name]: value,
       })
     })
     .catch(err => {
@@ -75,69 +74,67 @@ function Signup() {
         [name]: err.errors[0],
       })
     })
-    setFormValues({
-      ...formValues,
+    setCredentials({
+      ...credentials,
       [name]: value,
-    });
+    })
   };
 
-  useEffect(() => {
-    formSchema.isValid(formValues).then(valid => {
-      setDisabled(!valid)
-    })
-  }, [formValues])
+
+  const onSubmit = (evt) => {
+    console.log(evt);
+    evt.preventDefault();
+    console.log(credentials);
+    props.addUser(credentials);
+    history.push('/');
+  }
 
   return (
     <SignUpBox>
       <h2>Sign-Up</h2>
-      <form>
+      <form onSubmit={onSubmit}>
         <div>
-          <label>Username<br />
-            <input
-              type="text"
-              name="username"
-              onChange={onInputChange}
-              value={formValues.username}
-            ></input>
-          </label>
+          <label>Username</label><br />
+          <input
+            type="text"
+            name="username"
+            onChange={onInputChange}
+            value={credentials.username}
+          />
         </div>
         <div className='errors'>{formErrors.username}</div>
 
         {/* <div>
-          <label>Email<br />
-            <input
-              type="email"
-              name="email"
-              onChange={onInputChange}
-              value={formValues.email}
-            ></input>
-          </label>
-        </div>
-        <div className='errors'>{formErrors.email}</div> */}
+          <label>Email</label><br />
+          <input
+            type="email"
+            name="email"
+            onChange={onInputChange}
+            value={credentials.email}
+          />
+        </div> */}
+        {/* <div className='errors'>{formErrors.email}</div> */}
         <div>
-          <label>Password<br />
-            <input
-              type="password"
-              name="password"
-              onChange={onInputChange}
-              value={formValues.password}
-            ></input>
-          </label>
+          <label>Password</label><br />
+          <input
+            type="password"
+            name="password"
+            onChange={onInputChange}
+            value={credentials.password}
+          />
         </div>
         <div className='errors'>{formErrors.password}</div>
         {/* <div>
-          <label>Verify Password<br />
-            <input
-              type="password"
-              name="verifyPassword"
-              label="Confirm password"
-              onChange={onInputChange}
-              value={formValues.verifyPassword}
-            ></input>
-          </label>
-        </div> */}
-        <div className='errors'>{formErrors.verifyPassword}</div>
-        <button className='btn' disabled={disabled}>Sign-Up</button>
+          <label>Verify Password</label><br />
+          <input
+            type="password"
+            name="verifyPassword"
+            onChange={onInputChange}
+            value={credentials.verifyPassword}
+          ></input>
+        </div>
+        <div className='errors'>{formErrors.verifyPassword}</div> */}
+        <button className='btn' type='submit'>Sign-Up</button>
       </form>
     </SignUpBox>
   )
@@ -145,11 +142,12 @@ function Signup() {
 
 const mapStateToProps = state => {
   return {
-
+    username: state.username,
+    password: state.password,
   };
 };
 
 export default connect(
-  mapStateToProps,
-  {}
+  mapStateToProps, 
+  { addUser }
 )(Signup);

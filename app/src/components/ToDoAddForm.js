@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaAndre'
+import { connect } from 'react-redux';
+import { 
+  addToDo,
+
+} 
+  from '../actions';
 
 const initialFormValues = {
   task: '',
@@ -19,10 +24,7 @@ function ToDoAddForm() {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
 
-  const onSubmit = evt => {
-    evt.preventDefault()
-    // submit()
-  }
+
 
   const onInputChange = evt => {
     const { name, value } = evt.target
@@ -52,6 +54,12 @@ function ToDoAddForm() {
       setDisabled(!valid)
     })
   }, [formValues])
+
+  const onSubmit = evt => {
+    evt.preventDefault()
+    // console.log(props);
+    // props.addToDo(props);
+  }
 
   return (
     <form classname = 'form-container' onSubmit = {onSubmit}>
@@ -88,11 +96,12 @@ function ToDoAddForm() {
 
 const mapStateToProps = state => {
   return {
-
+    
   };
 };
 
 export default connect(
-  mapStateToProps,
-  {}
+  mapStateToProps, 
+  { addToDo 
+  }
 )(ToDoAddForm);
