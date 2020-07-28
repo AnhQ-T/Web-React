@@ -11,7 +11,11 @@ import {
   from '../actions';
 
 
-function ToDoList(props) {
+function ToDoList (props) {
+
+  console.log(props.isAdding);
+  console.log(props.isEditing);
+  console.log(props.isCompleted);
 
   const addToDo = (e) => {
     e.preventDefault();
@@ -27,10 +31,6 @@ function ToDoList(props) {
     e.preventDefault();
     props.toggleCompleted(props);
   };
-
-  
-
-  useEffect();
     
 
 
@@ -39,6 +39,8 @@ function ToDoList(props) {
       <button onClick={addToDo}></button>
       <button onClick={editToDo}></button>
       <button onClick={markComplete}></button>
+      { (toggleEditing === true) ? <ToDoEditForm/> : null}
+      { (toggleAdding === true) ? <ToDoAddForm/> : null}
     </div>
   );
 };

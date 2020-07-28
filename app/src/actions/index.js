@@ -82,11 +82,11 @@ export const addToDo = () => {
       .post('/users/1/lists/3/todos')
       .then(res => {
         console.log(res);
-        // dispatch({ type: ACTION_SUCCESS, payload: res.data});
+        dispatch({ type: ACTION_SUCCESS, payload: res.data});
       })
       .catch(err => {
         console.log(err);
-        // dispatch({ type: ACTION_FAILURE, payload: err.data });
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
     });
   };
 };

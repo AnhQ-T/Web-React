@@ -72,7 +72,7 @@ function Signup(props) {
     evt.preventDefault();
     console.log(credentials);
     props.addUser(credentials);
-    history.push('/')
+    history.push('/');
   }
 
   return (

@@ -1,12 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { 
-
+  editToDo,
+  
 } 
   from '../actions';
 
 
-function ToDoEditForm() {
+function ToDoEditForm (props) {
+
+  const editAToDo = (evt) => {
+    evt.preventDefault();
+    console.log(props);
+    props.editToDo(props);
+  };
+
   return (
     <div className="ToDoEdit">
       <span>lol</span>
@@ -22,5 +30,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps, 
-  {  }
+  { editToDo,
+
+  }
 )(ToDoEditForm);

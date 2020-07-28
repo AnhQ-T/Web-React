@@ -45,12 +45,12 @@ export const reducer = (state = initialState, action) => {
         case ADD_TODO :
             return {
                 ...state,
-               
+                isAdding: false,
             };
         case EDIT_TODO :
             return {
                 ...state,
-                
+                isEditing: false,
             };
         case DELETE_TODO :
             return {
