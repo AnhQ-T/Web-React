@@ -32,7 +32,7 @@ function ToDoEditForm() {
   }
 
   const onInputChange = evt => {
-    const { name, value } = evt.target
+    const { name, value } = evt.target;
     yup
       .reach(formSchema, name)
       .validate(value)

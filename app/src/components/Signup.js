@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Route, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
-import formSchema from '../validation/formSchemaAndre'
+import formSchema from '../validation/formSchemaZavier'
 import { 
   addUser,
 
@@ -55,13 +55,14 @@ function Signup(props) {
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
+    console.log(name, value);
 
     yup
     .reach(formSchema, name)
 
     .validate(value)
 
-    .then(valid => {
+    .then(() => {
       setCredentials({
         ...credentials,
         [name]: value,
@@ -85,11 +86,7 @@ function Signup(props) {
     evt.preventDefault();
     console.log(credentials);
     props.addUser(credentials);
-    history.push('/')
-    setCredentials({
-      ...credentials,
-      // [name]: '',
-    })
+    history.push('/');
   }
 
   return (
