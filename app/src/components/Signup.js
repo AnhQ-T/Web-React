@@ -9,12 +9,6 @@ import {
 } 
   from '../actions';
 
-const initialFormValues = {
-  username: '',
-  // email: '',
-  password: '',
-  // verifyPassword: '',
-};
 
 const initialFormErrors = {
   username: '',
@@ -49,7 +43,6 @@ const SignUpBox = styled.div`
 `
 
 function Signup(props) {
-  const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
   const [credentials, setCredentials] = useState({
@@ -85,7 +78,7 @@ function Signup(props) {
             type="text"
             name="username"
             onChange={onInputChange}
-            value={formValues.username}
+            value={credentials.username}
           ></input>
         </div>
         <div className='errors'>{formErrors.username}</div>
