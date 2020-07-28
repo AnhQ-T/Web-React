@@ -18,6 +18,8 @@ const initialFormErrors = {
 const LoginBox = styled.div`
   background: white;
   color: black;
+  border-right: 8px solid #01524c;
+  border-bottom: 8px solid #01524c;
   border-radius: 20px;
   width: 20%;
   padding-bottom: 1.5%;
@@ -32,6 +34,9 @@ const LoginBox = styled.div`
   }
   input{
     border-radius: 4px;
+    &:focus{
+      border: 3.5px solid #ed9b40;
+    }
   }
   .btn {
     background: #7cae7a;
@@ -39,6 +44,9 @@ const LoginBox = styled.div`
     width: 20%;
     margin: 2%;
     border-radius: 4px;
+    &:hover{
+        cursor: pointer;
+      }
   }
   .errors{
     color: red

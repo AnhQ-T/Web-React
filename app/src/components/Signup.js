@@ -19,7 +19,10 @@ const initialFormErrors = {
 };
 
 const SignUpBox = styled.div`
-  background: #7CAE7A;
+  background: white;
+  color: black;
+  border-right: 8px solid #01524c;
+  border-bottom: 8px solid #01524c;
   border-radius: 20px;
   width: 20%;
   padding-bottom: 1%;
@@ -34,13 +37,23 @@ const SignUpBox = styled.div`
   }
   input{
     border-radius: 4px;
+    &:focus{
+      border: 3.5px solid #ed9b40;
+    }
   }
   .btn {
     background: #ed9b40;
     width: 20%;
     margin: 2%;
     border-radius: 4px;
+      &:hover{
+        cursor: pointer;
+      }
   }
+  .errors{
+    color: red
+  }
+  
 `
 
 function Signup(props) {
