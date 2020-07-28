@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaAndre'
+
 import styled from 'styled-components'
+
+import { 
+  editToDo,
+  
+} 
+  from '../actions';
+
 
 const initialFormValues = {
   task: '',
@@ -21,12 +29,13 @@ function ToDoEditForm() {
   const [disabled, setDisabled] = useState(true)
 
   const onSubmit = evt => {
-    evt.preventDefault()
-    // submit()
+    evt.preventDefault();
+    // console.log(props);
+    // props.editToDo(props);
   }
 
   const onInputChange = evt => {
-    const { name, value } = evt.target
+    const { name, value } = evt.target;
     yup
       .reach(formSchema, name)
       .validate(value)
@@ -94,6 +103,8 @@ const mapStateToProps = state => {
 };
 
 export default connect(
-  mapStateToProps,
-  {}
+  mapStateToProps, 
+  { editToDo,
+
+  }
 )(ToDoEditForm);
