@@ -4,7 +4,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
-import ToDoList from './components/ToDoList';
+import ToDoItems from './components/ToDoItems';
 import './App.css';
 
 
@@ -24,7 +24,9 @@ function App() {
       <Route path='/edit'><ToDoEditForm/></Route>
       <Route path='/sign-up'><Signup/></Route>
       <Route path='/login'><Login/></Route>
-      <PrivateRoute path="/"><ToDoList/></PrivateRoute>
+      <PrivateRoute path="/">
+        <ToDoItems/>
+      </PrivateRoute>
 
 
     </div>

@@ -39,11 +39,12 @@ export const loginUser = ( credentials ) => {
   return dispatch => {
 
     console.log(credentials, 'Action from Credentials');
-    dispatch({ type: LOGIN_USER});
+    dispatch({ type: LOGIN_USER });
     axiosWithAuth()
       .post('/login', credentials)
       .then(res => {
         console.log(res);
+        localStorage.setItem('id', res.data.id);
         localStorage.setItem('token', res.data.token);
         dispatch({ type: ACTION_SUCCESS });
       })
@@ -58,13 +59,13 @@ export const deleteToDo = () => {
     return dispatch => {
       dispatch({ type: DELETE_TODO});
       axiosWithAuth()
-        .delete('/users/1/lists/')
+        .delete(`/users/1/lists/`)
         .then(res => {
-          // dispatch({ type: ACTION_SUCCESS, payload: res.data});
+          dispatch({ type: ACTION_SUCCESS, payload: res.data });
         })
         .catch(err => {
           console.log(err);
-          // dispatch({ type: ACTION_FAILURE, payload: err.data });
+          dispatch({ type: ACTION_FAILURE, payload: err.data });
       });
   };
 };
@@ -73,7 +74,7 @@ export const addToDo = ( info ) => {
   return dispatch => {
     dispatch({ type: ADD_TODO});
     axiosWithAuth()
-      .post('/users/1/lists/3/todos', info)
+      .post(`/users/1/lists/3/todos`, info)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});
@@ -89,7 +90,7 @@ export const editToDo = ( info ) => {
   return dispatch => {
     dispatch({ type: EDIT_TODO});
     axiosWithAuth()
-      .put('/users/1/lists/1/todos/1', info)
+      .put(`/users/1/lists/1/todos/1`, info)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});

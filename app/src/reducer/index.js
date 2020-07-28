@@ -16,17 +16,20 @@ import {
 const initialState = {
     username: '',
     password: '',
-    task: '',
-    description: '',
+    task: {
+        task: '',
+        description: '',
+        completed: false,
+    },
     isLoading: false,
     isAdding: false,
     isEditing: false,
-    isCompleted: false,
     data: [],
     error: '',
 };
 
 export const reducer = (state = initialState, action) => {
+    console.log(action);
     switch (action.type) {
         case ADD_USER :
             return {
@@ -84,7 +87,11 @@ export const reducer = (state = initialState, action) => {
         case TOGGLE_COMPLETED :
             return {
                 ...state,
-                isCompleted: !state.isCompleted,
+                task: {
+                    task: state.task,
+                    description: state.description,
+                    completed: state.completed,
+                }
             };
         default :
             return state;
