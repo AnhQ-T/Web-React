@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Route} from 'react-router-dom'
-import Signin from './components/Signin'
+import Signup from './components/Signup'
 import Login from './components/Login'
 import './App.css';
 
@@ -10,8 +10,8 @@ function App() {
       <Link to='/sign-up'>Sign-Up</Link>
       <Link to='/login'>Login</Link>
       
-      <Route path='/sign-up'><Signin/></Route>
-      <Route path='/login'><Login/></Route>
+      <Route path='/sign-up'>  <Signup/>  </Route>
+      <Route path='/login'>  <Login/>  </Route>
     </div>
   );
 }
