@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
 import { 
@@ -13,8 +14,10 @@ import {
 
 function ToDoList (props) {
 
-  console.log(props.isAdding);
-  console.log(props.isEditing);
+  let history = useHistory();
+
+  console.log(props.isAdding, 'is adding');
+  console.log(props.isEditing, 'is editing');
   console.log(props.isCompleted);
 
   const addToDo = (e) => {
@@ -32,6 +35,20 @@ function ToDoList (props) {
     props.toggleCompleted(props);
   };
     
+  // useEffect( () => {
+  //   if (toggleEditing === true){
+  //     history.push('/edit');
+  //   };
+    
+
+  // }, [props.isEditing]);
+
+  // useEffect( () => {
+  //   if (toggleAdding === true){
+  //     history.push('/add');
+  //   };
+
+  // }, [props.isAdding]);
 
 
   return (
@@ -39,8 +56,6 @@ function ToDoList (props) {
       <button onClick={addToDo}></button>
       <button onClick={editToDo}></button>
       <button onClick={markComplete}></button>
-      { (toggleEditing === true) ? <ToDoEditForm/> : null}
-      { (toggleAdding === true) ? <ToDoAddForm/> : null}
     </div>
   );
 };
