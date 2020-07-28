@@ -60,7 +60,7 @@ function Login() {
 
     .validate(value)
 
-    .then(() => {
+    .then( () => {
       setFormErrors({
         ...formErrors,
         [name]: "",
