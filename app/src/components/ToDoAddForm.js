@@ -1,86 +1,87 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-// import axios from 'axios'
+import * as yup from 'yup'
+import formSchema from './validation/formSchemaAndre'
 
-// const initialFormState = {
-//   task: '',
-//   description: '',
-// }
+const initialFormValues = {
+  task: '',
+  description: '',
+}
 
+const initialFormErrors = {
+  task: '',
+  description: '',
+}
 
 function ToDoAddForm() {
 
-  // const [toDos, setToDos] = useState([])
-  // const [formValues, setFormValues] = useState(initialFormState)
+  const [formValues, setFormValues] = useState(initialFormValues)
+  const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [disabled, setDisabled] = useState(true)
 
-  // const getToDos = () => {
-  //   axios.get(toDosURL)
-  //     .then(response => {
-  //       setToDos(response.data)
-  //     })
-  //     .catch(handleError)
-  // }
+  const onSubmit = evt => {
+    evt.preventDefault()
+    // submit()
+  }
 
-  // const postToDo = ({ task, description }) => {
-  //   axios.post(toDosURL, { task, description })
-  //     .then(res => setToDos(toDos.concat(res.data)))
-  //     .catch(handleError)
-  //     .finally(resetForm)
-  // }
+  const onInputChange = evt => {
+    const { name, value } = evt.target
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then(valid => {
+        setFormErrors({
+          ...formErrors,
+          [name]: "",
+        })
+      })
+      .catch(err => {
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0],
+        })
+      })
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  }
 
-  // const putToDo = ({ id, task, description }) => {
-  //   axios.put(`${toDosURL}/${id}`, { task, description })
-  //     .then(res => {
-  //       setToDos(toDos.map(toDo => {
-  //         return toDo.id === id ? res.data : toDo
-  //       }))
-  //     })
-  //     .catch(handleError)
-  //     .finally(resetForm)
-  // }
-
-  // const deleteToDo = (id) => {
-  //   axios.delete(`${toDosURL}/${id}`)
-  //     .then(res => {
-  //       setToDos(toDos.filter(toDo => toDo.id !== id))
-  //     })
-  //     .catch(handleError)
-  //     .finally(resetForm)
-  // }
-
-  // const editToDo = (id) => {
-  //   const toDo = toDos.find(t => t.id === id)
-  //   setFormValues({ ...toDo })
-  // }
-
-  // const handleError = err => { debugger }
-
-  // const resetForm = () => setFormValues(initialFormState)
-
-  // useEffect(() => getToDos(), [])
-
+  useEffect(() => {
+    formSchema.isValid(formValues).then(valid => {
+      setDisabled(!valid)
+    })
+  }, [formValues])
 
   return (
-    <form>
+    <form classname = 'form-container' onSubmit = {onSubmit}>
       <h3>Tasks</h3>
       <div id='task-container'>
-        <input
-          name='task'
-          type='text'
-          // value={values.task}
-          // onChange={onChange}
-          placeholder='Enter a Task'
-        />
-        <input
-          name='description'
-          type='text'
-          // value={values.description}
-          // onChange={onChange}
-          placeholder='Enter the Description'
-        />
+        <label>Task
+          <input
+            name='task'
+            type='text'
+            value={formValues.task}
+            onChange={onInputChange}
+            placeholder='Enter a Task'
+          />
+        </label>
+        <br />
+
+        <label>Description
+          <input
+            name='description'
+            type='text'
+            value={formValues.description}
+            onChange={onInputChange}
+            placeholder='Enter the Description'
+          />
+        </label>
       </div>
-      <button id='submitBtn'>Submit</button>
+      <button id='submitBtn' disabled = {disabled}>Submit</button>
       <button id='cancelBtn'>Cancel</button>
+      <p>{formErrors.task}</p>
+      <p>{formErrors.description}</p>
     </form>
   );
 };
