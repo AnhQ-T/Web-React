@@ -9,6 +9,12 @@ import {
 } 
   from '../actions';
 
+const initialFormValues = {
+  username: '',
+  // email: '',
+  password: '',
+  // verifyPassword: '',
+};
 
 const initialFormErrors = {
   username: '',
@@ -43,6 +49,7 @@ const SignUpBox = styled.div`
 `
 
 function Signup(props) {
+  const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
   const [credentials, setCredentials] = useState({
@@ -54,7 +61,7 @@ function Signup(props) {
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
-
+    
     setCredentials({
       ...credentials,
       [name]: value,
@@ -65,7 +72,7 @@ function Signup(props) {
     evt.preventDefault();
     console.log(credentials);
     props.addUser(credentials);
-    history.push('/');
+    history.push('/')
   }
 
   return (
@@ -78,7 +85,7 @@ function Signup(props) {
             type="text"
             name="username"
             onChange={onInputChange}
-            value={credentials.username}
+            value={formValues.username}
           ></input>
         </div>
         <div className='errors'>{formErrors.username}</div>

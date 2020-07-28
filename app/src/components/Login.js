@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import React, {useState}from 'react';
 import { Link, Route, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import * as yup from 'yup'
+import formSchema from '../validation/formSchemaZavier'
 import { 
   loginUser,
 
@@ -15,10 +17,11 @@ const initialFormErrors = {
 };
 
 const LoginBox = styled.div`
-  background: #7CAE7A;
+  background: white;
+  color: black;
   border-radius: 20px;
   width: 20%;
-  padding-bottom: 1%;
+  padding-bottom: 1.5%;
 
   form { 
     display: flex;
@@ -32,10 +35,14 @@ const LoginBox = styled.div`
     border-radius: 4px;
   }
   .btn {
-    background: #ed9b40;
+    background: #7cae7a;
+    color: white;
     width: 20%;
     margin: 2%;
     border-radius: 4px;
+  }
+  .errors{
+    color: red
   }
 
 `
@@ -55,8 +62,26 @@ function Login (props) {
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
 
-    setCredentials({
-      ...credentials,
+    yup
+    .reach(formSchema, name)
+
+    .validate(value)
+
+    .then( () => {
+      setFormErrors({
+        ...formErrors,
+        [name]: "",
+      })
+    })
+    .catch(err => {
+      setFormErrors({
+        ...formErrors,
+        [name]: err.errors[0],
+      })
+    })
+
+    setFormValues({
+      ...formValues,
       [name]: value,
     });
   };
@@ -68,6 +93,11 @@ function Login (props) {
     history.push('/');
   };
 
+  useEffect(() => {
+    formSchema.isValid(formValues).then(valid => {
+      setDisabled(!valid)
+    })
+  }, [formValues])
 
   return (
     <LoginBox>
@@ -75,26 +105,26 @@ function Login (props) {
         <h2>Login</h2>
         <form onSubmit={onSubmit}>
           <div>
-            <div>
-              <label className="labels">Username</label><br/>
-            </div>
-            <input
-              type="text"
-              name="username"
-              onChange={onInputChange}
-              value={credentials.username}
-            ></input>
+            <label className="labels">Username<br/>
+              <input
+                type="text"
+                name="username"
+                onChange={onInputChange}
+                value={formValues.username}
+              ></input>
+            </label>
           </div>
           <div className='errors'>{formErrors.username}</div>
 
           <div>        
-            <label className="labels">Password</label><br/>
-            <input
-              type="password"
-              name="password"
-              onChange={onInputChange}
-              value={credentials.password}
-            ></input>
+            <label className="labels">Password<br/>
+              <input
+                type="password"
+                name="password"
+                onChange={onInputChange}
+                value={formValues.password}
+              ></input>
+            </label>
           </div>
           <div className='errors'>{formErrors.password}</div>
           <button className='btn' type='submit'>Login</button>
