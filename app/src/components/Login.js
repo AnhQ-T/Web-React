@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, {useState}from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { 
   loginUser,
@@ -8,10 +8,6 @@ import {
 } 
   from '../actions';
 
-const initialFormValues = {
-  username: '',
-  password: '',
-};
 
 const initialFormErrors = {
   username: '',
@@ -47,7 +43,6 @@ const LoginBox = styled.div`
 
 
 function Login (props) {
-  const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
   const [credentials, setCredentials] = useState({
@@ -55,6 +50,7 @@ function Login (props) {
     password: props.password,
   });
 
+  let history = useHistory();
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
@@ -69,6 +65,7 @@ function Login (props) {
     evt.preventDefault();
     console.log(credentials);
     props.loginUser(credentials);
+    history.push('/');
   };
 
 

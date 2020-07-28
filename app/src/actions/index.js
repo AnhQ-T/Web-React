@@ -1,4 +1,5 @@
 import { axiosWithAuth } from '../utils';
+import { useHistory } from 'react-router-dom';
 
 export const FETCH_TODO = 'FETCH_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
@@ -22,7 +23,7 @@ export const addUser = ( credentials ) => {
     console.log(credentials, 'Action from Credentials');
     dispatch({ type: ADD_USER});
     axiosWithAuth()
-      .post('/register')
+      .post('/register', credentials)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});
@@ -34,18 +35,21 @@ export const addUser = ( credentials ) => {
   };
 };
 
-export const loginUser = () => {
+export const loginUser = ( credentials ) => {
   return dispatch => {
+
+    console.log(credentials, 'Action from Credentials');
     dispatch({ type: LOGIN_USER});
     axiosWithAuth()
-      .post('/login')
+      .post('/login', credentials)
       .then(res => {
         console.log(res);
-        // dispatch({ type: ACTION_SUCCESS, payload: res.data});
+        localStorage.setItem('token', res.data.token);
+        dispatch({ type: ACTION_SUCCESS });
       })
       .catch(err => {
         console.log(err);
-        // dispatch({ type: ACTION_FAILURE, payload: err.data });
+        dispatch({ type: ACTION_FAILURE });
     });
   };
 };

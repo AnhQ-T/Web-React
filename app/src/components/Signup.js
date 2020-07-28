@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import React, { useState, useEffect } from 'react';
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { 
   addUser,
@@ -11,16 +11,16 @@ import {
 
 const initialFormValues = {
   username: '',
-  email: '',
+  // email: '',
   password: '',
-  verifyPassword: '',
+  // verifyPassword: '',
 };
 
 const initialFormErrors = {
   username: '',
-  email: '',
+  // email: '',
   password: '',
-  verifyPassword: '',
+  // verifyPassword: '',
 };
 
 const SignUpBox = styled.div`
@@ -52,19 +52,27 @@ function Signup(props) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
+  const [credentials, setCredentials] = useState({
+    username: props.username,
+    password: props.password,
+  });
+
+  let history = useHistory();
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
 
-    setFormValues({
-      ...formValues,
+    setCredentials({
+      ...credentials,
       [name]: value,
     });
   };
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    props.addUser(props.credentials);
+    console.log(credentials);
+    props.addUser(credentials);
+    history.push('/')
   }
 
   return (
@@ -82,27 +90,27 @@ function Signup(props) {
         </div>
         <div className='errors'>{formErrors.username}</div>
 
-        <div>
+        {/* <div>
           <label>Email</label><br />
           <input
             type="email"
             name="email"
             onChange={onInputChange}
-            value={formValues.email}
+            value={credentials.email}
           ></input>
-        </div>
-        <div className='errors'>{formErrors.email}</div>
+        </div> */}
+        {/* <div className='errors'>{formErrors.email}</div> */}
         <div>
           <label>Password</label><br />
           <input
             type="password"
             name="password"
             onChange={onInputChange}
-            value={formValues.password}
+            value={credentials.password}
           ></input>
         </div>
         <div className='errors'>{formErrors.password}</div>
-        <div>
+        {/* <div>
           <label>Verify Password</label><br />
           <input
             type="password"
@@ -111,7 +119,7 @@ function Signup(props) {
             value={formValues.verifyPassword}
           ></input>
         </div>
-        <div className='errors'>{formErrors.verifyPassword}</div>
+        <div className='errors'>{formErrors.verifyPassword}</div> */}
         <button className='btn' type='submit'>Sign-Up</button>
       </form>
     </SignUpBox>
@@ -120,7 +128,8 @@ function Signup(props) {
 
 const mapStateToProps = state => {
   return {
-    credentials: state.credentials,
+    username: state.username,
+    password: state.password,
   };
 };
 
