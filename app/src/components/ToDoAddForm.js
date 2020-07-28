@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaAndre'
+import styled from 'styled-components'
+
+const StyledDetails = styled.div`
+
+
+
+
+`
+
+
+
+
 import { connect } from 'react-redux';
 import { 
   addToDo,
