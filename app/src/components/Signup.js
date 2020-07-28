@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { Link, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
 
@@ -23,6 +22,8 @@ const initialFormErrors = {
 const SignUpBox = styled.div`
   background: white;
   color: black;
+  border-right: 8px solid #01524c;
+  border-bottom: 8px solid #01524c;
   border-radius: 20px;
   width: 20%;
   padding-bottom: 1.5%;
@@ -37,6 +38,9 @@ const SignUpBox = styled.div`
   }
   input{
     border-radius: 4px;
+    &:focus{
+      border: 3.5px solid #ed9b40;
+    }
   }
   .btn {
     background: #7cae7a;
@@ -44,10 +48,14 @@ const SignUpBox = styled.div`
     width: 20%;
     margin: 2%;
     border-radius: 4px;
+      &:hover{
+        cursor: pointer;
+      }
   }
   .errors{
     color: red
   }
+  
 `
 
 function Signup() {
@@ -63,7 +71,7 @@ function Signup() {
 
     .validate(value)
 
-    .then(valid => {
+    .then( () => {
       setFormErrors({
         ...formErrors,
         [name]: "",
