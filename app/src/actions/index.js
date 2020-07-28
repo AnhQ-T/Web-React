@@ -18,7 +18,8 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const addUser = ( credentials ) => {
   
   return dispatch => {
-    console.log(credentials);
+
+    console.log(credentials, 'Action from Credentials');
     dispatch({ type: ADD_USER});
     axiosWithAuth()
       .post('/register')

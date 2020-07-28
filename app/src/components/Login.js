@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import React, {useState}from 'react';
-import {Link, Route} from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import { 
   loginUser,
 
 } 
   from '../actions';
-
 
 const initialFormValues = {
   username: '',
@@ -45,24 +44,31 @@ const LoginBox = styled.div`
 
 `
 
-function Login(props) {
+
+
+function Login (props) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
+  const [credentials, setCredentials] = useState({
+    username: props.username,
+    password: props.password,
+  });
+
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
 
-    setFormValues({
-      ...formValues,
+    setCredentials({
+      ...credentials,
       [name]: value,
     });
   };
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    console.log(props);
-    props.loginUser(formValues);
+    console.log(credentials);
+    props.loginUser(credentials);
   };
 
 
@@ -79,7 +85,7 @@ function Login(props) {
               type="text"
               name="username"
               onChange={onInputChange}
-              value={formValues.username}
+              value={credentials.username}
             ></input>
           </div>
           <div className='errors'>{formErrors.username}</div>
@@ -90,7 +96,7 @@ function Login(props) {
               type="password"
               name="password"
               onChange={onInputChange}
-              value={formValues.password}
+              value={credentials.password}
             ></input>
           </div>
           <div className='errors'>{formErrors.password}</div>
@@ -103,8 +109,8 @@ function Login(props) {
 
 const mapStateToProps = state => {
   return {
-    credentials: state.credentials,
-    
+    username: state.username,
+    password: state.password,
   };
 };
 

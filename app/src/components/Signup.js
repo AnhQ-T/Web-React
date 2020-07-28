@@ -64,7 +64,7 @@ function Signup(props) {
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    props.addUser(formValues);
+    props.addUser(props.credentials);
   }
 
   return (

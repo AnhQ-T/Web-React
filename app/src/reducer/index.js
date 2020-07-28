@@ -12,16 +12,10 @@ import {
     TOGGLE_COMPLETED,
 } from '../actions';
 
-const initialFormValues = {
-    username: '',
-    password: '',
-  };
-  
 
 const initialState = {
-    formValues: initialFormValues,
-    formErrors: initialFormValues,
-    credentials: initialFormValues,
+    username: '',
+    password: '',
     isLoading: false,
     isAdding: false,
     isEditing: false,
@@ -36,12 +30,12 @@ export const reducer = (state = initialState, action) => {
         case ADD_USER :
             return {
                 ...state,
-                credentials: action.payload,
+                data: action.payload,
             };
         case LOGIN_USER :
             return {
                 ...state,
-                credentials: action.payload,
+                data: action.payload,
             };
         case FETCH_TODO :
             return {
