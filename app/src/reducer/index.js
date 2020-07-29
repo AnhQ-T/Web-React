@@ -28,6 +28,9 @@ const initialState = {
     isLoading: false,
     isAdding: false,
     isEditing: false,
+    deletedList: false,
+    addedList: false,
+    editedList: false,
     userID: '',
     ToDoID: '',
     data: [],
@@ -54,26 +57,28 @@ export const reducer = (state = initialState, action) => {
                 isLoading: true,
 
             };
+        case DELETE_TODO_LISTS :
+            return {
+                ...state,
+                addedList: !state.addedList,
+            };
         case ADD_TODO_LISTS :
             return {
                 ...state,
-                isAdding: false,
+                addedList: !state.addedList
             };
         case EDIT_TODO_LISTS :
             return {
                 ...state,
                 isEditing: false,
-            };
-        case DELETE_TODO_LISTS :
-            return {
-                ...state,
-                
+                editedList: !state.editedList
             };
         case ACTION_SUCCESS :
             return {
                 ...state,
                 isLoading: false,
                 data: action.payload,
+                
                 error: '',
             };
         case ACTION_FAILURE :

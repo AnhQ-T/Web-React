@@ -6,17 +6,12 @@ import { connect } from 'react-redux';
 import { 
   addToDo,
 
-
 } 
   from '../actions';
 
 
   
 const StyledDetails = styled.div`
-
-
-
-
 `
 
 

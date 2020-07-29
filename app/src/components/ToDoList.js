@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 
 import { axiosWithAuth } from '../utils';
 import { 
-  toggleAdding,
+
+  deleteToDoLists,
+  
   } 
   from '../actions';
-=======
+
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components'
@@ -15,21 +17,29 @@ import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
 
-import { 
-  toggleAdding,
-  
 
 
-
-
-import ToDo from './ToDo';
-
-function ToDoList() {
+function ToDoList (props) {
   const [data, setData] = useState([])
-  
+
+  useEffect(() => {
+    axiosWithAuth()
+      .get(``)
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      })
+  })
+
   const addToDo = (e) => {
     e.preventDefault();
     props.toggleAdding(props);
+  };
+
+  const deleteList = (e) => {
+    e.preventDefault();
+    props.deleteToDoLists( props.listID );
+
   };
 
   useEffect(() => {
@@ -57,31 +67,30 @@ function ToDoList() {
   // }, [props.isAdding]);
 
   return (
-    <div className="ToDoList">
-//       {{
-//         list.map( task => {
-//           return (
-//             <>
-//             <ToDo/>
-//             </>
-//           )
-//         })
-//       }}
-    </div>
-  );
+      <div className="ToDoList">
+        {/* <button onClick={addToDo}>add</button> */}
+        <button onClick={deleteList}>X---X</button>
+        {/* {
+          list.map( task => {
+            return (
+              <ToDo key={task.id} task.id={task.id} task={task}/>
+
+            )
+          })
+        } */}
+      </div>
+    )
 };
 
 const mapStateToProps = state => {
   return {
-
-    isAdding: state.isAdding,
     
-    
-
-    };
+  };
 };
 
 export default connect(
   mapStateToProps, 
-  {  }
-)(ToDoDashboard);
+  { 
+    deleteToDoLists,
+  }
+)(ToDoList);
