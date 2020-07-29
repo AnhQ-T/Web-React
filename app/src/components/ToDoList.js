@@ -23,14 +23,15 @@ import ToDo from './ToDo'
 function ToDoList (props) {
   const [data, setData] = useState([])
 
-  console.log(props);
+  const userID = localStorage.getItem('id')
+  // console.log(props);
   useEffect(() => {
-    // axiosWithAuth()
-    //   .get(``)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setData(res.data);
-    //   })
+    axiosWithAuth()
+      .get(`/users/${userID}/lists/${props.listID}/todos`)
+      .then((res) => {
+        // console.log(res);
+        setData(res.data);
+      })
   }, [])
 
   const addToDo = (e) => {
@@ -72,7 +73,9 @@ function ToDoList (props) {
         {
           data.map( task => {
             return (
-              <div onClick={editToDo}>
+              
+              <div>
+                <button onClick={editToDo}>Edit your ToDo</button>
                 <ToDo key={task.id} taskID={task.id} task={task}/>
               </div>
             )
