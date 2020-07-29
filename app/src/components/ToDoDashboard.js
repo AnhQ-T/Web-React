@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { axiosWithAuth as Axios} from '../utils';
 import { connect } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
+import ToDo from './ToDo'
 import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
-import ToDo from './ToDo'
 import ToDoList from './ToDoList';
 import { 
   toggleAdding,
@@ -12,52 +12,24 @@ import {
   toggleCompleted,
   addToDoList,
   editToDoList,
+  deleteToDoLists,
 
 } 
   from '../actions';
 
 
 function ToDoDashboard(props) {
-  const [list, setList] = useState([])
-  let history = useHistory();
+  const [list, setList] = useState([]);
 
-  
-
-  const newList = {listname: 'New List',}
+  const newList = {listname: 'New List'}
 
   const addList = (e) => {
     e.preventDefault();
     props.addToDoList(newList);
   };
 
-  const editList = (e) => {
-    e.preventDefault();
-    props.editToDoList()
-  }
-
-  const markComplete = (e) => {
-    e.preventDefault();
-    props.markComplete(props);
-  };
   const userID = localStorage.getItem('id');
 
-  
-
-  // useEffect( () => {
-  //   if (toggleEditing === true){
-  //     history.push('/edit');
-  //   };
-    
-
-  // }, [props.isEditing]);
-
-  // useEffect( () => {
-  //   if (toggleAdding === true){
-  //     history.push('/add');
-  //   };
-
-  // }, [props.isAdding]);
-  
 useEffect(() => {
   
   Axios().get(`/users/${userID}/lists`)
@@ -71,20 +43,18 @@ useEffect(() => {
   
 }, [props.addedList])
 
+
   return (
     <div className="ToDoDashboard">
-      <button onClick={addList}>Add a List!</button>
+      <h1>Wunderlist</h1>
+      <button onClick={addList}>New List</button>
       {
         list.map(( list ) => {
           return (
             <>
-              <h2>{list.listname}</h2>
-              <ToDoList key={list.id} listID={list.id}/>
+              <ToDoList key={list.id} listID={list.id} list={list.listname}/>
               
-              {/* <div>{task.todo}</div>
-              
-              <button onClick={editToDo}>edit</button>
-              <button onClick={markComplete}>complete</button> */}
+              <div>{list.todo}</div>
             </>
           )
         })
@@ -94,11 +64,9 @@ useEffect(() => {
 };
 
 const mapStateToProps = state => {
-  
+
   return {
     isAdding: state.isAdding,
-    isEditing: state.isEditing,
-    isCompleted: state.isCompleted,
     addedList: state.addedList,
 
   };
@@ -111,6 +79,8 @@ export default connect(
   toggleEditing,
   toggleCompleted,
   addToDoList,
+  deleteToDoLists,
+  editToDoList,
   
   
 })(ToDoDashboard);

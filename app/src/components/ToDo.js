@@ -20,6 +20,7 @@ function ToDo(props, {task}) {
 
   return (
     <div className="ToDo">
+      <h2>{props.task}</h2>
       <button onClick={editToDo}>edit</button>
       <button id={task.id} onClick={markComplete}>complete</button>
     </div>

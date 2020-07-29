@@ -21,26 +21,12 @@ import axios from "axios";
   
 const ToDoListEditForm = props => {
     
-    const [list, setList] = useState(initialList);
-  
-    const userID = localStorage.getItem('id');
-    const location = useLocation();
-    
-    useEffect(() => {
-      if (location.state) {
-        setList(location.state);
-      } else {
-        axiosWithAuth()
-          .get(`/users/${userID}/lists`)
-          .then(res => setList(res.data))
-          .catch(err => console.log(err));
-      }
-    }, [  ]);
-  
+    const [list, setList] = useState(props.list);
+
     const changeHandler = ev => {
       ev.persist();
       const value = ev.target.value;
-      setlist({
+      setList({
         ...list,
         [ev.target.name]: value
       });
@@ -53,17 +39,14 @@ const ToDoListEditForm = props => {
   
     return (
       <div>
-        <h2>Edit List</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="name"
             onChange={changeHandler}
             placeholder="name"
-            value={list.name}
+            value={props.list}
           />
-  
-          <button type='submit'>Edit</button>
         </form>
       </div>
     );

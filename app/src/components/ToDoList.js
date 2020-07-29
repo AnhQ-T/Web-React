@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import ToDoListEditForm from './ToDoListEditForm';
 
 import { axiosWithAuth } from '../utils';
 import { 
@@ -22,6 +23,8 @@ import ToDo from './ToDo'
 
 function ToDoList (props) {
   const [data, setData] = useState([])
+  const [isEditing, setIsEditing] = useState(false);
+
 
   const userID = localStorage.getItem('id')
   // console.log(props);
@@ -39,10 +42,10 @@ function ToDoList (props) {
     props.toggleAdding();
   };
 
-  const editToDo = (e) => {
+  const editList = (e) => {
     e.preventDefault();
-    props.toggleEditing();
-  }
+    setIsEditing(!isEditing);
+  };
 
   const deleteList = (e) => {
     e.preventDefault();
@@ -50,37 +53,22 @@ function ToDoList (props) {
 
   };
 
-// useEffect( () => {
-  //   if (toggleEditing === true){
-  //     history.push('/edit');
-  //   };
-    
-
-  // }, [props.isEditing]);
-
-  // useEffect( () => {
-  //   if (toggleAdding === true){
-  //     history.push('/add');
-  //   };
-
-  // }, [props.isAdding]);
-
   return (
       <div className="ToDoList">
         
+
+        { isEditing ? <ToDoListEditForm list={props.list}/> : <h2 onClick={editList}>{props.list}</h2>}
         <button onClick={addToDo}>add</button>
-        <button onClick={deleteList}>X---X</button>
         {
           data.map( task => {
             return (
-              
-              <div>
-                <button onClick={editToDo}>Edit your ToDo</button>
+              // <div onClick={markCompleted}>
                 <ToDo key={task.id} taskID={task.id} task={task}/>
-              </div>
+              // </div>
             )
           })
         }
+        <button onClick={deleteList}>X</button>
       </div>
     )
 };
@@ -95,7 +83,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps, 
   { 
-    deleteToDoLists,
     editToDoList,
     toggleEditing,
   }
