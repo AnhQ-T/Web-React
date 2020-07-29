@@ -2,17 +2,26 @@ import React, { useEffect, useState } from 'react';
 import {axiosWithAuth as Axios} from '../utils';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
+import styled from 'styled-components'
+
 import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
 
 import { 
   toggleAdding,
-  toggleEditing,
-  toggleCompleted,
+  
+
 
 } 
   from '../actions';
+
+let taskDisplay = true
+
+const TaskStyled = styled.div`
+  display: ${() => taskDisplay ? "block" : "none"};
+`
 
 
 
@@ -20,21 +29,12 @@ import {
 
 function ToDoList(props) {
   const [list, setList] = useState([])
+  
   let history = useHistory();
 
   const addToDo = (e) => {
     e.preventDefault();
     props.toggleAdding(props);
-  };
-
-  const editToDo = (e) => {
-    e.preventDefault();
-    props.toggleEditing(props);
-  };
-
-  const markComplete = (e) => {
-    e.preventDefault();
-    props.toggleCompleted(props);
   };
     
   // useEffect( () => {
@@ -64,16 +64,11 @@ useEffect(() => {
 
   return (
     <div className="ToDoList">
-
+      <button onClick={addToDo}>add</button>
       {
         list.map( task => {
           return (
-            <>
-              <div>{task.todo}</div>
-              <button onClick={addToDo}>add</button>
-              <button onClick={editToDo}>edit</button>
-              <button onClick={markComplete}>complete</button>
-            </>
+            <ToDo key={task.id} task={task}/>
           )
         })
       }
@@ -84,8 +79,8 @@ useEffect(() => {
 const mapStateToProps = state => {
   return {
     isAdding: state.isAdding,
-    isEditing: state.isEditing,
-    isCompleted: state.isCompleted,
+    
+    
   };
 };
 
@@ -93,7 +88,6 @@ export default connect(
   mapStateToProps, 
   { 
   toggleAdding,
-  toggleEditing,
-  toggleCompleted,
+  
   
 })(ToDoList);
