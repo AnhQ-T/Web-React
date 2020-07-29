@@ -66,6 +66,8 @@ function Login (props) {
 
   let history = useHistory();
 
+  console.log(props.data);
+
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
 
@@ -97,7 +99,7 @@ function Login (props) {
     evt.preventDefault();
     console.log(credentials);
     props.loginUser(credentials);
-    history.push('/');
+    history.push('/dashboard');
   };
 
   useEffect(() => {
@@ -145,6 +147,7 @@ const mapStateToProps = state => {
   return {
     username: state.username,
     password: state.password,
+    data: state.data,
   };
 };
 

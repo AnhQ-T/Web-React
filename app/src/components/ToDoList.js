@@ -1,27 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios'
-
-
+import { axiosWithAuth } from '../utils';
 import { 
 
 
 } 
   from '../actions';
+import ToDo from './ToDo';
 
-function ToDoSearchBar() {
-
+function ToDoList() {
   const [data, setData] = useState([])
 
-
+  useEffect(() => {
+    axiosWithAuth()
+      .get(``)
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      })
+  })
   return (
-    <div className="ToDoSearchBar">
-      <input
-        type='text'
-        value={this.data.searchTerm}
-        onChange={this.editSearchTerm}
-        placeholder='Search your task'
-      />
+    <div className="ToDoList">
+      {/* {
+        list.map( task => {
+          return (
+            <>
+            <ToDo/>
+            </>
+          )
+        })
+      } */}
     </div>
   );
 };
@@ -35,4 +43,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps, 
   {  }
-)(ToDoSearchBar);
+)(ToDoDashboard);

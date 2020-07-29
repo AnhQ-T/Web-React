@@ -25,7 +25,6 @@ function ToDoEditForm ( props ) {
   const [disabled, setDisabled] = useState(true)
   const [formValues, setFormValues] = useState({
     task: props.task,
-    description: props.description,
   });
 
   const onSubmit = evt => {
@@ -36,6 +35,7 @@ function ToDoEditForm ( props ) {
 
   const onInputChange = evt => {
     const { name, value } = evt.target;
+
     yup
       .reach(formSchema, name)
       .validate(value)
@@ -78,7 +78,7 @@ function ToDoEditForm ( props ) {
         </label>
         <br />
 
-        <label>Description
+        {/* <label>Description
           <input
             name='description'
             type='text'
@@ -86,12 +86,12 @@ function ToDoEditForm ( props ) {
             onChange={onInputChange}
             placeholder='Enter the Description'
           />
-        </label>
+        </label> */}
       </div>
       <button id='editBtn' disabled={disabled}>Edit</button>
       <button id='cancelBtn'>Cancel</button>
       <p>{formErrors.task}</p>
-      <p>{formErrors.description}</p>
+      {/* <p>{formErrors.description}</p> */}
     </form>
   );
 };

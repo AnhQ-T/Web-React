@@ -13,9 +13,9 @@ import {
 
 } 
   from '../actions';
-import ToDoItems from './ToDoItems';
+import ToDoCategory from './ToDoDashboard';
 
-function ToDoItems(props) {
+function ToDoList(props) {
   const [list, setList] = useState([])
   let history = useHistory();
 
@@ -33,7 +33,7 @@ function ToDoItems(props) {
     e.preventDefault();
     props.markComplete(props);
   };
-
+  const userID = localStorage.getItem('id');
 
     
   // useEffect( () => {
@@ -50,28 +50,31 @@ function ToDoItems(props) {
   //   };
 
   // }, [props.isAdding]);
+  
 useEffect(() => {
   
-  Axios().get(`/users/${localStorage.getItem('id')}/lists`)
+  Axios().get(`/users/${userID}/lists`)
     .then(res => {
-      console.log(res.data);
-      setList(res.data)
+      console.log(res);
+      setList(res.data);
+      debugger
     })
     .catch()
 
 }, [])
 
   return (
-    <div className="ToDoItems">
+    <div className="ToDoDashboard">
 
       {
-        list.map( task => {
+        list.map(( userID ) => {
           return (
             <>
-              <div>{task.todo}</div>
+              <ToDoList />
+              {/* <div>{task.todo}</div>
               <button onClick={addToDo}>add</button>
               <button onClick={editToDo}>edit</button>
-              <button onClick={markComplete}>complete</button>
+              <button onClick={markComplete}>complete</button> */}
             </>
           )
         })
@@ -95,4 +98,4 @@ export default connect(
   toggleEditing,
   toggleCompleted,
   
-})(ToDoItems);
+})(ToDoList);

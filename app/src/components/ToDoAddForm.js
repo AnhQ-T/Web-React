@@ -31,7 +31,7 @@ function ToDoAddForm (props) {
   const [disabled, setDisabled] = useState(true)
   const [formValues, setFormValues] = useState({
     task: props.task,
-    description: props.description,
+    // description: props.description,
   });
 
   const onInputChange = evt => {
@@ -84,7 +84,7 @@ function ToDoAddForm (props) {
         </label>
         <br />
 
-        <label>Description
+        {/* <label>Description
           <input
             name='description'
             type='text'
@@ -92,7 +92,7 @@ function ToDoAddForm (props) {
             onChange={onInputChange}
             placeholder='Enter the Description'
           />
-        </label>
+        </label> */}
       </div>
       <button id='submitBtn' disabled = {disabled}>Submit</button>
       <button id='cancelBtn'>Cancel</button>
@@ -105,7 +105,7 @@ function ToDoAddForm (props) {
 const mapStateToProps = state => {
   return {
     task: state.task,
-    description: state.description,
+    // description: state.description,
 
   };
 };

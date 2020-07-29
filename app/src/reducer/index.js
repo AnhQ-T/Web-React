@@ -1,6 +1,10 @@
 import {
     ADD_USER,
     LOGIN_USER,
+    FETCH_TODO_LISTS,
+    ADD_TODO_LISTS,
+    EDIT_TODO_LISTS,
+    DELETE_TODO_LISTS,
     FETCH_TODO,
     ADD_TODO,
     EDIT_TODO,
@@ -24,6 +28,8 @@ const initialState = {
     isLoading: false,
     isAdding: false,
     isEditing: false,
+    userID: '',
+    ToDoID: '',
     data: [],
     error: '',
 };
@@ -40,23 +46,25 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.payload,
+
             };
-        case FETCH_TODO :
+        case FETCH_TODO_LISTS :
             return {
                 ...state,
                 isLoading: true,
+
             };
-        case ADD_TODO :
+        case ADD_TODO_LISTS :
             return {
                 ...state,
                 isAdding: false,
             };
-        case EDIT_TODO :
+        case EDIT_TODO_LISTS :
             return {
                 ...state,
                 isEditing: false,
             };
-        case DELETE_TODO :
+        case DELETE_TODO_LISTS :
             return {
                 ...state,
                 

@@ -1,10 +1,15 @@
 import React from 'react';
 import {Link, Route} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { 
+
+} 
+  from './utils';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
-import ToDoItems from './components/ToDoItems';
+import ToDoDashboard from './components/ToDoDashboard';
 import './App.css';
 
 
@@ -15,22 +20,51 @@ function App() {
   return (
     <div className="App">
 
-      <Link to='/add'>Add</Link>
-      <Link to='/edit'>Edit</Link>
+      <PrivateRoute>
+        <Link to='/dashboard'>Home</Link>
+        <Link to='/dashboard/add'>Add</Link>
+      </PrivateRoute>
       <Link to='/sign-up'>Sign-Up</Link>
       <Link to='/login'>Login</Link>
 
-      <Route path='/add'><ToDoAddForm/></Route>
-      <Route path='/edit'><ToDoEditForm/></Route>
-      <Route path='/sign-up'><Signup/></Route>
-      <Route path='/login'><Login/></Route>
-      <PrivateRoute path="/">
-        <ToDoItems/>
-      </PrivateRoute>
-
+      <Route 
+        path='/sign-up'
+        component={Signup}
+      />
+      <Route 
+        path='/login'
+        component={Login}
+      />
+      <PrivateRoute 
+        path="/dashboard"
+        component={ToDoDashboard}
+      />
+      <PrivateRoute 
+        path="/dashboard/lists"
+        component={ToDoDashboard}
+      />
+      <PrivateRoute 
+        path='/dashboard/add'
+        component={ToDoAddForm}        
+      />
+      <PrivateRoute 
+        path='/dashboard/edit'
+        component={ToDoEditForm}
+      />
 
     </div>
   );
 }
+const mapStateToProps = state => {
+  return {
 
-export default App;
+
+  };
+};
+
+export default connect(
+  mapStateToProps, 
+  {
+
+  }
+)(App);

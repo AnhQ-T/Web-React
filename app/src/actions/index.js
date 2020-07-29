@@ -1,6 +1,10 @@
 import { axiosWithAuth } from '../utils';
 import { useHistory } from 'react-router-dom';
 
+export const FETCH_TODO_LISTS = 'FETCH_TODO_LISTS';
+export const DELETE_TODO_LISTS = 'DELETE_TODO_LISTS';
+export const ADD_TODO_LISTS = 'ADD_TODO_LISTS';
+export const EDIT_TODO_LISTS = 'EDIT_TODO_LISTS';
 export const FETCH_TODO = 'FETCH_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO = 'ADD_TODO';
@@ -55,13 +59,14 @@ export const loginUser = ( credentials ) => {
   };
 };
 
-export const deleteToDo = () => {
+export const deleteToDoLists = (id) => {
     return dispatch => {
-      dispatch({ type: DELETE_TODO});
+      dispatch({ type: DELETE_TODO_LISTS });
       axiosWithAuth()
-        .delete(`/users/1/lists/`)
+        .delete(`/users//lists`)
         .then(res => {
-          dispatch({ type: ACTION_SUCCESS, payload: res.data });
+          console.log(res, 'server response from delete')
+          dispatch({ type: ACTION_SUCCESS });
         })
         .catch(err => {
           console.log(err);
@@ -70,11 +75,59 @@ export const deleteToDo = () => {
   };
 };
 
-export const addToDo = ( info ) => {
+export const deleteToDo = (id) => {
   return dispatch => {
-    dispatch({ type: ADD_TODO});
+    dispatch({ type: DELETE_TODO});
+    axiosWithAuth()
+      .delete(``)
+      .then(res => {
+        console.log(res, 'server response from delete')
+        dispatch({ type: ACTION_SUCCESS });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
+    });
+};
+};
+
+export const addToDoList = ( info ) => {
+  return dispatch => {
+    dispatch({ type: ADD_TODO_LISTS });
     axiosWithAuth()
       .post(`/users/1/lists/3/todos`, info)
+      .then(res => {
+        console.log(res);
+        dispatch({ type: ACTION_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
+    });
+  };
+};
+
+export const addToDo = ( info ) => {
+  return dispatch => {
+    dispatch({ type: ADD_TODO });
+    axiosWithAuth()
+      .post(``, info)
+      .then(res => {
+        console.log(res);
+        dispatch({ type: ACTION_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
+    });
+  };
+};
+
+export const editToDoList = ( info ) => {
+  return dispatch => {
+    dispatch({ type: EDIT_TODO_LISTS });
+    axiosWithAuth()
+      .put(`/users/1/lists/1/todos/1`, info)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});
