@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
+// import ToDoSearchBar from './ToDoSearchBar'
 
 import { 
   toggleAdding,
@@ -64,7 +65,6 @@ useEffect(() => {
 
   return (
     <div className="ToDoList">
-
       {
         list.map( task => {
           return (
