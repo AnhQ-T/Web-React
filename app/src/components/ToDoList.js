@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { axiosWithAuth } from '../utils';
+import { useHistory } from 'react-router-dom';
+
+import styled from 'styled-components'
+
+import ToDoEditForm from './ToDoEditForm';
+import ToDoAddForm from './ToDoAddForm';
+import ToDo from './ToDo'
 import { 
+  toggleAdding,
+  
 
 
 } 
@@ -19,24 +28,25 @@ function ToDoList() {
         setData(res.data);
       })
   })
+
   return (
-    <div className="ToDoList">
-      {/* {
-        list.map( task => {
-          return (
-            <>
-            <ToDo/>
-            </>
-          )
-        })
-      } */}
-    </div>
-  );
+      <div className="ToDoList">
+        <button onClick={addToDo}>add</button>
+        {
+          list.map( task => {
+            return (
+              <ToDo key={task.id} task={task}/>
+
+            )
+          })
+        }
+      </div>
+    )
 };
 
 const mapStateToProps = state => {
   return {
-
+    
   };
 };
 
