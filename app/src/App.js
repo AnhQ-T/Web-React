@@ -40,10 +40,6 @@ function App() {
         component={ToDoDashboard}
       />
       <PrivateRoute 
-        path="/dashboard/lists"
-        component={ToDoDashboard}
-      />
-      <PrivateRoute 
         path='/dashboard/add'
         component={ToDoAddForm}        
       />
