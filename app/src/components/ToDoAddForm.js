@@ -8,12 +8,11 @@ import {
 
 } 
   from '../actions';
+
+
   
 const StyledDetails = styled.div`
 `
-
-
-
 
 
 

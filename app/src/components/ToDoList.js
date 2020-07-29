@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+
 import { axiosWithAuth } from '../utils';
+import { 
+  toggleAdding,
+  } 
+  from '../actions';
+  
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components'
@@ -8,17 +14,7 @@ import styled from 'styled-components'
 import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
-import { 
-  toggleAdding,
-  deleteToDoLists,
-
-
-} 
-  from '../actions';
-
-// const TaskStyled = styled.div`
-//   /* display: ${() => taskDisplay ? "block" : "none"}; */
-// `
+  
 
 
 
@@ -34,7 +30,6 @@ function ToDoList (props) {
       })
   })
 
-
   const addToDo = (e) => {
     e.preventDefault();
     props.toggleAdding(props);
@@ -46,7 +41,16 @@ function ToDoList (props) {
 
   };
 
-  // useEffect( () => {
+  useEffect(() => {
+    axiosWithAuth()
+      .get(``)
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      })
+  })
+
+// useEffect( () => {
   //   if (toggleEditing === true){
   //     history.push('/edit');
   //   };
