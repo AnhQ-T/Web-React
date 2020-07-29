@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaAndre'
-
 import styled from 'styled-components'
-
 import { 
   editToDo,
   
@@ -22,11 +20,12 @@ const initialFormErrors = {
   description: '',
 }
 
-function ToDoEditForm() {
-
-  const [formValues, setFormValues] = useState(initialFormValues)
+function ToDoEditForm ( props ) {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
+  const [formValues, setFormValues] = useState({
+    task: props.task,
+  });
 
   const onSubmit = evt => {
     evt.preventDefault();
@@ -36,6 +35,7 @@ function ToDoEditForm() {
 
   const onInputChange = evt => {
     const { name, value } = evt.target;
+
     yup
       .reach(formSchema, name)
       .validate(value)
@@ -78,7 +78,7 @@ function ToDoEditForm() {
         </label>
         <br />
 
-        <label>Description
+        {/* <label>Description
           <input
             name='description'
             type='text'
@@ -86,12 +86,12 @@ function ToDoEditForm() {
             onChange={onInputChange}
             placeholder='Enter the Description'
           />
-        </label>
+        </label> */}
       </div>
       <button id='editBtn' disabled={disabled}>Edit</button>
       <button id='cancelBtn'>Cancel</button>
       <p>{formErrors.task}</p>
-      <p>{formErrors.description}</p>
+      {/* <p>{formErrors.description}</p> */}
     </form>
   );
 };

@@ -1,6 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import {axiosWithAuth as Axios} from '../utils';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+
+import { axiosWithAuth } from '../utils';
+import { 
+  toggleAdding,
+  } 
+  from '../actions';
+=======
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components'
@@ -14,30 +20,28 @@ import {
   
 
 
-} 
-  from '../actions';
-
-let taskDisplay = true
-
-const TaskStyled = styled.div`
-  display: ${() => taskDisplay ? "block" : "none"};
-`
 
 
+import ToDo from './ToDo';
 
-
-
-function ToDoList(props) {
-  const [list, setList] = useState([])
+function ToDoList() {
+  const [data, setData] = useState([])
   
-  let history = useHistory();
-
   const addToDo = (e) => {
     e.preventDefault();
     props.toggleAdding(props);
   };
-    
-  // useEffect( () => {
+
+  useEffect(() => {
+    axiosWithAuth()
+      .get(``)
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      })
+  })
+
+// useEffect( () => {
   //   if (toggleEditing === true){
   //     history.push('/edit');
   //   };
@@ -51,43 +55,33 @@ function ToDoList(props) {
   //   };
 
   // }, [props.isAdding]);
-useEffect(() => {
-  
-  Axios().get('https://wunderlist2backend.herokuapp.com/api/users/1/lists/1/todos')
-    .then(res => {
-      console.log(res.data);
-      setList(res.data)
-    })
-    .catch()
-
-}, [])
 
   return (
     <div className="ToDoList">
-      <button onClick={addToDo}>add</button>
-      {
-        list.map( task => {
-          return (
-            <ToDo key={task.id} task={task}/>
-          )
-        })
-      }
+//       {{
+//         list.map( task => {
+//           return (
+//             <>
+//             <ToDo/>
+//             </>
+//           )
+//         })
+//       }}
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
+
     isAdding: state.isAdding,
     
     
-  };
+
+    };
 };
 
 export default connect(
   mapStateToProps, 
-  { 
-  toggleAdding,
-  
-  
-})(ToDoList);
+  {  }
+)(ToDoDashboard);
