@@ -6,7 +6,7 @@ import {
   from '../actions';
 
 function ToDo(props, {task}) {
-  const [active, setActive] = useState()
+  const [active, setActive] = useState(false)
 
   const editToDo = (e) => {
     e.preventDefault();
@@ -15,13 +15,11 @@ function ToDo(props, {task}) {
 
   const markComplete = (e) => {
     e.preventDefault();
-    setActive(!active)
-    console.log("Hellwo");
+    setActive(!active);
   };
-  
+
   return (
     <div className="ToDo">
-      <div>{task.todo}</div>
       <button onClick={editToDo}>edit</button>
       <button id={task.id} onClick={markComplete}>complete</button>
     </div>

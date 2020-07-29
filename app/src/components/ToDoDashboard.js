@@ -41,9 +41,7 @@ function ToDoDashboard(props) {
   };
   const userID = localStorage.getItem('id');
 
-  const redirect = () => {
-    document.location.reload(true);
-  };
+  
 
   // useEffect( () => {
   //   if (toggleEditing === true){
@@ -80,7 +78,7 @@ useEffect(() => {
         list.map(( list ) => {
           return (
             <>
-
+              <h2>{list.listname}</h2>
               <ToDoList key={list.id} listID={list.id}/>
               
               {/* <div>{task.todo}</div>
@@ -96,6 +94,7 @@ useEffect(() => {
 };
 
 const mapStateToProps = state => {
+  
   return {
     isAdding: state.isAdding,
     isEditing: state.isEditing,
