@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 
 import { axiosWithAuth } from '../utils';
 import { 
-  toggleAdding,
+
+  deleteToDoLists,
+  
   } 
   from '../actions';
-  
+
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components'
@@ -14,7 +16,6 @@ import styled from 'styled-components'
 import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
-  
 
 
 
