@@ -10,18 +10,22 @@ import {
   toggleAdding,
   toggleEditing,
   toggleCompleted,
+  addToDoList,
 
 } 
   from '../actions';
-import ToDoCategory from './ToDoDashboard';
+import ToDoList from './ToDoList';
 
-function ToDoList(props) {
+function ToDoDashboard(props) {
   const [list, setList] = useState([])
   let history = useHistory();
 
-  const addToDo = (e) => {
+
+  const newList = {listname: 'New List',}
+
+  const addList = (e) => {
     e.preventDefault();
-    props.toggleAdding(props);
+    props.addToDoList(newList);
   };
 
   const editToDo = (e) => {
@@ -57,22 +61,23 @@ useEffect(() => {
     .then(res => {
       console.log(res);
       setList(res.data);
-      debugger
     })
     .catch()
 
-}, [])
+}, [props.addedList])
 
   return (
     <div className="ToDoDashboard">
-
+      <button onClick={addList}>Add a List!</button>
       {
-        list.map(( userID ) => {
+        list.map(( list ) => {
           return (
             <>
-              <ToDoList />
+
+              <ToDoList key={list.id} listID={list.id}/>
+              
               {/* <div>{task.todo}</div>
-              <button onClick={addToDo}>add</button>
+              
               <button onClick={editToDo}>edit</button>
               <button onClick={markComplete}>complete</button> */}
             </>
@@ -88,6 +93,8 @@ const mapStateToProps = state => {
     isAdding: state.isAdding,
     isEditing: state.isEditing,
     isCompleted: state.isCompleted,
+    addedList: state.addedList,
+
   };
 };
 
@@ -97,5 +104,6 @@ export default connect(
   toggleAdding,
   toggleEditing,
   toggleCompleted,
+  addToDoList,
   
-})(ToDoList);
+})(ToDoDashboard);

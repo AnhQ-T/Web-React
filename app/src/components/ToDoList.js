@@ -10,14 +10,19 @@ import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
 import { 
   toggleAdding,
-  
+  deleteToDoLists,
 
 
 } 
   from '../actions';
-import ToDo from './ToDo';
 
-function ToDoList() {
+// const TaskStyled = styled.div`
+//   /* display: ${() => taskDisplay ? "block" : "none"}; */
+// `
+
+
+
+function ToDoList (props) {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -29,17 +34,45 @@ function ToDoList() {
       })
   })
 
+
+  const addToDo = (e) => {
+    e.preventDefault();
+    props.toggleAdding(props);
+  };
+
+  const deleteList = (e) => {
+    e.preventDefault();
+    props.deleteToDoLists( props.listID );
+
+  };
+
+  // useEffect( () => {
+  //   if (toggleEditing === true){
+  //     history.push('/edit');
+  //   };
+    
+
+  // }, [props.isEditing]);
+
+  // useEffect( () => {
+  //   if (toggleAdding === true){
+  //     history.push('/add');
+  //   };
+
+  // }, [props.isAdding]);
+
   return (
       <div className="ToDoList">
-        <button onClick={addToDo}>add</button>
-        {
+        {/* <button onClick={addToDo}>add</button> */}
+        <button onClick={deleteList}>X---X</button>
+        {/* {
           list.map( task => {
             return (
-              <ToDo key={task.id} task={task}/>
+              <ToDo key={task.id} task.id={task.id} task={task}/>
 
             )
           })
-        }
+        } */}
       </div>
     )
 };
@@ -52,5 +85,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps, 
-  {  }
-)(ToDoDashboard);
+  { 
+    deleteToDoLists,
+  }
+)(ToDoList);
