@@ -28,6 +28,7 @@ const initialState = {
     isLoading: false,
     isAdding: false,
     isEditing: false,
+    isEditingList: false,
     deletedList: false,
     addedList: false,
     editedList: false,
@@ -51,6 +52,18 @@ export const reducer = (state = initialState, action) => {
                 data: action.payload,
 
             };
+        case FETCH_TODO :
+            return {
+                ...state,
+                data: action.payload,
+
+            };
+        case EDIT_TODO :
+            return {
+                ...state,
+                isEditing: false,
+
+            };
         case FETCH_TODO_LISTS :
             return {
                 ...state,
@@ -70,15 +83,14 @@ export const reducer = (state = initialState, action) => {
         case EDIT_TODO_LISTS :
             return {
                 ...state,
-                isEditing: false,
-                editedList: !state.editedList
+                isEditingList: false,
+                addedList: !state.addedList,
             };
         case ACTION_SUCCESS :
             return {
                 ...state,
                 isLoading: false,
                 data: action.payload,
-                
                 error: '',
             };
         case ACTION_FAILURE :

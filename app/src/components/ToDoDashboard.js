@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { axiosWithAuth as Axios} from '../utils';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import ToDoEditForm from './ToDoEditForm';
 import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
-
+import ToDoList from './ToDoList';
 import { 
   toggleAdding,
   toggleEditing,
   toggleCompleted,
   addToDoList,
+  editToDoList,
 
 } 
   from '../actions';
-import ToDoList from './ToDoList';
+
 
 function ToDoDashboard(props) {
   const [list, setList] = useState([])
   let history = useHistory();
 
+  
 
   const newList = {listname: 'New List',}
 
@@ -28,10 +30,10 @@ function ToDoDashboard(props) {
     props.addToDoList(newList);
   };
 
-  const editToDo = (e) => {
+  const editList = (e) => {
     e.preventDefault();
-    props.toggleEditing(props);
-  };
+    props.editToDoList()
+  }
 
   const markComplete = (e) => {
     e.preventDefault();
@@ -39,7 +41,10 @@ function ToDoDashboard(props) {
   };
   const userID = localStorage.getItem('id');
 
-    
+  const redirect = () => {
+    document.location.reload(true);
+  };
+
   // useEffect( () => {
   //   if (toggleEditing === true){
   //     history.push('/edit');
@@ -62,8 +67,10 @@ useEffect(() => {
       console.log(res);
       setList(res.data);
     })
-    .catch()
-
+    .catch(err => {
+      console.log(err.message)
+    })
+  
 }, [props.addedList])
 
   return (
@@ -105,5 +112,6 @@ export default connect(
   toggleEditing,
   toggleCompleted,
   addToDoList,
+  
   
 })(ToDoDashboard);

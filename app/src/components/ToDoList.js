@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 
 import { axiosWithAuth } from '../utils';
 import { 
-
   deleteToDoLists,
-  
+  editToDoList,
+  toggleEditing,
+
   } 
   from '../actions';
 
@@ -22,34 +23,31 @@ import ToDo from './ToDo'
 function ToDoList (props) {
   const [data, setData] = useState([])
 
+  console.log(props);
   useEffect(() => {
-    axiosWithAuth()
-      .get(``)
-      .then((res) => {
-        console.log(res.data);
-        setData(res.data);
-      })
-  })
+    // axiosWithAuth()
+    //   .get(``)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setData(res.data);
+    //   })
+  }, [])
 
   const addToDo = (e) => {
     e.preventDefault();
-    props.toggleAdding(props);
+    props.toggleAdding();
   };
+
+  const editToDo = (e) => {
+    e.preventDefault();
+    props.toggleEditing();
+  }
 
   const deleteList = (e) => {
     e.preventDefault();
     props.deleteToDoLists( props.listID );
 
   };
-
-  useEffect(() => {
-    axiosWithAuth()
-      .get(``)
-      .then((res) => {
-        console.log(res.data);
-        setData(res.data);
-      })
-  })
 
 // useEffect( () => {
   //   if (toggleEditing === true){
@@ -68,23 +66,26 @@ function ToDoList (props) {
 
   return (
       <div className="ToDoList">
-        {/* <button onClick={addToDo}>add</button> */}
+        
+        <button onClick={addToDo}>add</button>
         <button onClick={deleteList}>X---X</button>
-        {/* {
-          list.map( task => {
+        {
+          data.map( task => {
             return (
-              <ToDo key={task.id} task.id={task.id} task={task}/>
-
+              <div onClick={editToDo}>
+                <ToDo key={task.id} taskID={task.id} task={task}/>
+              </div>
             )
           })
-        } */}
+        }
       </div>
     )
 };
 
 const mapStateToProps = state => {
   return {
-    
+    addedList: state.addedList,
+
   };
 };
 
@@ -92,5 +93,7 @@ export default connect(
   mapStateToProps, 
   { 
     deleteToDoLists,
+    editToDoList,
+    toggleEditing,
   }
 )(ToDoList);
