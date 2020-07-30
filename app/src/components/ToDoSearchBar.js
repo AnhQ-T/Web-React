@@ -1,60 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+// import React, { useState, useEffect } from 'react';
+// import { connect } from 'react-redux';
 
-import axios from 'axios'
-
-
-import { 
+// import axios from 'axios'
 
 
-} 
-  from '../actions';
+// import { 
 
-function ToDoSearchBar() {
 
-  const [data, setData] = useState([])
+// } 
+//   from '../actions';
 
-  useEffect(() => {
+// function ToDoSearchBar() {
 
-    axios.get('https://wunderlist2backend.herokuapp.com/')
+//   const [data, setData] = useState([])
 
-      .then(res => {
-        setData(res.data)
-        console.log('hi', res.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+//   useEffect(() => {
 
-  }, [searchTerm])
+//     axios.get('https://wunderlist2backend.herokuapp.com/')
 
-  editSearchTerm = (e) => [
-    this.setData({ data: e.target.value })
-  ]
+//       .then(res => {
+//         setData(res.data)
+//         console.log('hi', res.data)
+//       })
+//       .catch(err => {
+//         console.log(err)
+//       })
 
-  dynamicSearch = () => {
-    return this.data.filter(data.includes(this.data.searchTerm))
-  }
+//   }, [searchTerm])
 
-  return (
-    <div className="ToDoSearchBar">
-      <input
-        type='text'
-        value={this.data.searchTerm}
-        onChange={this.editSearchTerm}
-        placeholder='Search your task'
-      />
-    </div>
-  );
-};
+//   editSearchTerm = (e) => [
+//     this.setData({ data: e.target.value })
+//   ]
 
-const mapStateToProps = state => {
-  return {
+//   dynamicSearch = () => {
+//     return this.data.filter(data.includes(this.data.searchTerm))
+//   }
 
-  };
-};
+//   return (
+//     <div className="ToDoSearchBar">
+//       <input
+//         type='text'
+//         value={this.data.searchTerm}
+//         onChange={this.editSearchTerm}
+//         placeholder='Search your task'
+//       />
+//     </div>
+//   );
+// };
 
-export default connect(
-  mapStateToProps, 
-  {  }
-)(ToDoSearchBar);
+// const mapStateToProps = state => {
+//   return {
+
+//   };
+// };
+
+// export default connect(
+//   mapStateToProps, 
+//   {  }
+// )(ToDoSearchBar);

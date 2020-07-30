@@ -9,6 +9,11 @@ import {
 } 
   from '../actions';
 
+  
+const initialFormValues = {
+  task: '',
+  description: '',
+}
 
   
 const StyledDetails = styled.div`
