@@ -14,6 +14,21 @@ import './App.css';
 import ToDoEditForm from './components/ToDoEditForm'
 
 function App() {
+
+  useEffect(() =>{
+
+    axios.get('')
+
+      .then(res => {
+        setData(res.data)
+        console.log('hi', res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+  }, [])
+
   return (
     <div className="App">
 

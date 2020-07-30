@@ -12,6 +12,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components'
 import ToDo from './ToDo'
+// import ToDoSearchBar from './ToDoSearchBar'
 
 
 
@@ -48,6 +49,15 @@ function ToDoList (props) {
   return (
       <div className="ToDoList">
         { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname} id={props.list.id}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
+        {
+          toDos.map( task => {
+            return (
+              // <div onClick={markCompleted}>
+                <ToDo key={task.id} task={task}/>
+              // </div>
+            )
+          })
+        }
         <button onClick={deleteList}>X</button>
         <button onClick={addNewToDo}>New Todo</button>
       </div>
