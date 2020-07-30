@@ -19,9 +19,11 @@ function ToDo(props) {
     setActive(!active);
   };
 
+  const completed = active ? "line-through black" : "none";
+
   return (
     <div className="ToDo">
-      <h2>{props.task.todo}</h2>
+      <h2 style={{textDecoration: completed}}>{props.task.todo}</h2>
       <button onClick={editToDo}>edit</button>
       <button id={props.task.id} onClick={markComplete}>complete</button>
     </div>
