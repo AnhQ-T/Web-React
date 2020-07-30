@@ -12,14 +12,7 @@ import {
   
 const StyledDetails = styled.div`
 
-
-
-
 `
-
-
-
-
 
 
 const initialFormValues = {
