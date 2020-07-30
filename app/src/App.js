@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import {Link, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { 
@@ -13,25 +13,25 @@ import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
-  // const [data, setData] = useState()
 
-  // useEffect(() =>{
+  const [data, setData] = useState([])
 
-  //   axios.get('')
+  useEffect(() =>{
 
-  //     .then(res => {
-  //       setData(res.data)
-  //       console.log('hi', res.data)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-
-  // }, [])
+    axios.get('https://wunderlist2backend.herokuapp.com/api/')
+// Rubric Item 3
+      .then(res => {
+        setData(res.data)
+        console.log('hi', res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [])
 
   return (
     <div className="App">
-
+      <h2>{data.message}</h2>
       <Link to='/sign-up'>Sign-Up</Link>
       <Link to='/login'>Login</Link>
       <Link to='/dashboard'>Dashboard</Link>
