@@ -9,7 +9,7 @@ import {
   from '../actions';
 
 
-function Dashboard(props) {
+function Dashboard (props) {
   const [list, setList] = useState([]);
 
   const newList = {listname: 'New List'}

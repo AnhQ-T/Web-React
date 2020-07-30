@@ -6,8 +6,8 @@ import {
   from '../actions';
 
 function ToDo(props) {
-  console.log(props.task)
-  const [active, setActive] = useState(false)
+  console.log(props);
+  const [active, setActive] = useState(false);
 
   const editToDo = (e) => {
     e.preventDefault();

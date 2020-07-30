@@ -16,15 +16,15 @@ import ToDo from './ToDo'
 
 
 function ToDoList (props) {
-  const [toDos, setToDos] = useState([])
+  const [toDos, setToDos] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-
-  const userID = localStorage.getItem('id')
+  console.log(props);
+  const userID = localStorage.getItem('id');
   useEffect(() => {
     axiosWithAuth()
       .get(`/users/${userID}/lists/${props.list.id}/todos`)
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         setToDos(res.data);
       })
   }, [])
@@ -57,7 +57,7 @@ function ToDoList (props) {
 const mapStateToProps = state => {
   return {
     redirect: state.redirect,
-
+    
   };
 };
 
