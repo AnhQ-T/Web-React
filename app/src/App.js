@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() =>{
 
-    axios.get('')
+    axios.get('https://wunderlist2backend.herokuapp.com/api/')
 // Rubric Item 3
       .then(res => {
         setData(res.data)
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="App">
-
+      <h2>{data.message}</h2>
       <Link to='/sign-up'>Sign-Up</Link>
       <Link to='/login'>Login</Link>
       <Link to='/dashboard'>Dashboard</Link>
