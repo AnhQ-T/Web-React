@@ -23,8 +23,7 @@ function ToDo(props) {
 
   return (
     <div className="ToDo">
-      <span style={{textDecoration: completed}}>To Do</span>
-      <h2>{props.task.todo}</h2>
+      <h2 style={{textDecoration: completed}}>{props.task.todo}</h2>
       <button onClick={editToDo}>edit</button>
       <button id={props.task.id} onClick={markComplete}>complete</button>
     </div>
