@@ -47,11 +47,11 @@ function App() {
         component={Login}
       />
       <PrivateRoute 
-        path="/dashboard"
+        exact path="/dashboard"
         component={Dashboard}
       />
       <PrivateRoute 
-        path='/dashboard/edit'
+        path='/dashboard/edittodo'
         component={ToDoEditForm}
       />
 

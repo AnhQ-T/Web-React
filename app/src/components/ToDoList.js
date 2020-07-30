@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import ListEditForm from './ToDoListEditForm';
+import ListEditForm from './ListEditForm';
 
 import { axiosWithAuth } from '../utils';
 import { 
@@ -54,9 +54,7 @@ function ToDoList (props) {
         {
           toDos.map( task => {
             return (
-              // <div onClick={markCompleted}>
                 <ToDo key={task.id} task={task}/>
-              // </div>
             )
           })
         }

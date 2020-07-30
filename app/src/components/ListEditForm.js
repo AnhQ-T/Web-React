@@ -19,8 +19,8 @@ const ListEditForm = props => {
 
     const handleSubmit = e => {
       e.preventDefault();
-      props.editToDoList({ listname: list}, props.id)
-      props.setIsEditing(false)
+      props.editToDoList({ listname: list}, props.id);
+      props.setIsEditing(false);
     };
   
     return (

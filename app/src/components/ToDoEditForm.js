@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaAndre'
@@ -9,30 +10,34 @@ import {
 } 
   from '../actions';
 
-
-const initialFormValues = {
-  task: '',
-  description: '',
-}
-
 const initialFormErrors = {
   task: '',
-  description: '',
 }
 
 function ToDoEditForm ( props ) {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
+  const [active, setActive] = useState(false);
   const [formValues, setFormValues] = useState({
     task: props.task,
   });
 
-  
+  let history = useHistory();
+
+  const cancelEdit = (e) => {
+    e.preventDefault();
+    setActive(!active);
+  };
+
+  if ( active ) {
+    history.push('/dashboard');
+  };
+
 
   const onSubmit = evt => {
     evt.preventDefault();
-    // console.log(props);
-    // props.editToDo(props);
+    console.log(props);
+    props.editToDo(props);
   }
 
   const onInputChange = evt => {
@@ -66,7 +71,7 @@ function ToDoEditForm ( props ) {
   }, [formValues])
 
   return (
-    <form classname='edit-form-container' onSubmit={onSubmit}>
+    <form className='edit-form-container' onSubmit={onSubmit}>
       <h3>Edit Tasks</h3>
       <div id='edit-task-container'>
         <label>Task
@@ -90,8 +95,8 @@ function ToDoEditForm ( props ) {
           />
         </label> */}
       </div>
-      <button id='editBtn' disabled={disabled}>Edit</button>
-      <button id='cancelBtn'>Cancel</button>
+      <button id='editBtn' type='submit' disabled={disabled}>Submit</button>
+      <button id='cancelBtn' onClick={cancelEdit}>Cancel</button>
       <p>{formErrors.task}</p>
       {/* <p>{formErrors.description}</p> */}
     </form>
