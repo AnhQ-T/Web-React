@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components'
 import { 
   toggleEditing,
 }
   from '../actions';
 
-
-
-function ToDo(props, {task}) {
+function ToDo(props) {
+  console.log(props.task)
   const [active, setActive] = useState(false)
 
   const editToDo = (e) => {
@@ -26,8 +24,9 @@ function ToDo(props, {task}) {
   return (
     <div className="ToDo">
       <span style={{textDecoration: completed}}>To Do</span>
+      <h2>{props.task.todo}</h2>
       <button onClick={editToDo}>edit</button>
-      <button id={task.id} onClick={markComplete}>complete</button>
+      <button id={props.task.id} onClick={markComplete}>complete</button>
     </div>
   );
 };
