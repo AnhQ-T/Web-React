@@ -1,94 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import ListEditForm from './ToDoListEditForm';
 
 import { axiosWithAuth } from '../utils';
 import { 
   deleteToDoLists,
-  editToDoList,
-  toggleEditing,
-
+  addToDo,
   } 
   from '../actions';
 
 import { useHistory } from 'react-router-dom';
-
 import styled from 'styled-components'
-
-import ToDoEditForm from './ToDoEditForm';
-import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
 // import ToDoSearchBar from './ToDoSearchBar'
 
 
 
 function ToDoList (props) {
-  const [data, setData] = useState([])
+  const [toDos, setToDos] = useState([])
+  const [isEditing, setIsEditing] = useState(false);
 
   const userID = localStorage.getItem('id')
-  // console.log(props);
   useEffect(() => {
     axiosWithAuth()
-      .get(`/users/${userID}/lists/${props.listID}/todos`)
+      .get(`/users/${userID}/lists/${props.list.id}/todos`)
       .then((res) => {
         // console.log(res);
-        setData(res.data);
+        setToDos(res.data);
       })
   }, [])
 
-  const addToDo = (e) => {
+  const addNewToDo = (e) => {
     e.preventDefault();
-    props.toggleAdding();
+    props.addToDo({todo: "New Todo"}, props.list.id);
   };
 
-  const editToDo = (e) => {
+  const toggleEditing = (e) => {
     e.preventDefault();
-    props.toggleEditing();
-  }
+    setIsEditing(!isEditing);
+  };
 
   const deleteList = (e) => {
     e.preventDefault();
-    props.deleteToDoLists( props.listID );
+    props.deleteToDoLists( props.list.id );
 
   };
 
-// useEffect( () => {
-  //   if (toggleEditing === true){
-  //     history.push('/edit');
-  //   };
-    
-
-  // }, [props.isEditing]);
-
-  // useEffect( () => {
-  //   if (toggleAdding === true){
-  //     history.push('/add');
-  //   };
-
-  // }, [props.isAdding]);
-
   return (
       <div className="ToDoList">
-        
-        <button onClick={addToDo}>add</button>
-        <button onClick={deleteList}>X---X</button>
-        {
-          data.map( task => {
-            return (
-              
-              <div>
-                <button onClick={editToDo}>Edit your ToDo</button>
-                <ToDo key={task.id} taskID={task.id} task={task}/>
-              </div>
-            )
-          })
-        }
+        { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname} id={props.list.id}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
+        <button onClick={deleteList}>X</button>
+        <button onClick={addNewToDo}>New Todo</button>
       </div>
     )
 };
 
 const mapStateToProps = state => {
   return {
-    addedList: state.addedList,
+    redirect: state.redirect,
 
   };
 };
@@ -96,8 +65,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps, 
   { 
-    deleteToDoLists,
-    editToDoList,
-    toggleEditing,
+    addToDo,
+    deleteToDoLists
   }
 )(ToDoList);
