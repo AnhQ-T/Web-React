@@ -7,25 +7,19 @@ import {
   from './utils';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import NavBar from './components/NavBar';
 import PrivateRoute from './components/PrivateRoute';
-import ToDoDashboard from './components/ToDoDashboard';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
-
-import ToDoAddForm from './components/ToDoAddForm'
 import ToDoEditForm from './components/ToDoEditForm'
 
 function App() {
   return (
     <div className="App">
 
-      <PrivateRoute>
-        <Link to='/dashboard'>Home</Link>
-        <Link to='/dashboard/add'>Add</Link>
-      </PrivateRoute>
       <Link to='/sign-up'>Sign-Up</Link>
       <Link to='/login'>Login</Link>
+      <Link to='/dashboard'>Dashboard</Link>
 
       <Route 
         path='/sign-up'
@@ -37,11 +31,7 @@ function App() {
       />
       <PrivateRoute 
         path="/dashboard"
-        component={ToDoDashboard}
-      />
-      <PrivateRoute 
-        path='/dashboard/add'
-        component={ToDoAddForm}        
+        component={Dashboard}
       />
       <PrivateRoute 
         path='/dashboard/edit'
