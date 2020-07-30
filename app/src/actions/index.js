@@ -1,6 +1,6 @@
 import { axiosWithAuth } from '../utils';
 
-// YES
+// Actions
 export const ADD_USER = 'ADD_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const ACTION_SUCCESS = 'ACTION_SUCCESS';
@@ -50,6 +50,8 @@ export const loginUser = ( credentials ) => {
     });
   };
 };
+
+
 export const deleteToDoLists = ( listID ) => {
     return dispatch => {
       axiosWithAuth()
@@ -64,6 +66,7 @@ export const deleteToDoLists = ( listID ) => {
       });
   };
 };
+
 
 export const deleteToDo = ( listID, toDoID )  => {
   return dispatch => {
@@ -81,6 +84,7 @@ export const deleteToDo = ( listID, toDoID )  => {
 };
 };
 
+
 export const addToDoList = ( body ) => {
   return dispatch => {
     axiosWithAuth()
@@ -95,6 +99,7 @@ export const addToDoList = ( body ) => {
     });
   };
 };
+
 
 export const addToDo = ( body, listID ) => {
   return dispatch => {
@@ -112,6 +117,7 @@ export const addToDo = ( body, listID ) => {
   };
 };
 
+
 export const editToDoList = ( body, id ) => {
   return dispatch => {
     console.log(body)
@@ -128,11 +134,15 @@ export const editToDoList = ( body, id ) => {
   };
 };
 
+
 export const editToDo = ( body, listID, toDoID ) => {
+  const newToDo = {
+    todo: body
+  };
   return dispatch => {
     dispatch({ type: EDIT_TODO});
     axiosWithAuth()
-      .put(`/users/${localStorage.getItem('id')}/lists/${listID}/todos/${toDoID}`, body)
+      .put(`/users/${localStorage.getItem('id')}/lists/${listID}/todos/${toDoID}`, newToDo)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});
@@ -143,6 +153,7 @@ export const editToDo = ( body, listID, toDoID ) => {
     });
   };
 };
+
 
 export const toggleEditing = () => {
   return { type: TOGGLE_EDITING }

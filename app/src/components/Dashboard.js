@@ -35,7 +35,7 @@ function Dashboard (props) {
   return (
     <div className="dashboard">
       <h1>Wunderlist</h1>
-      <button onClick={addList}>New List</button>
+      <button onClick={addList}>Add a New List</button>
       {
         list.map(( list ) => {
           return (

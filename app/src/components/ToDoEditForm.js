@@ -22,6 +22,8 @@ function ToDoEditForm ( props ) {
     task: props.task,
   });
 
+  console.log(props);
+
   let history = useHistory();
 
   const cancelEdit = (e) => {
@@ -37,19 +39,20 @@ function ToDoEditForm ( props ) {
   const onSubmit = evt => {
     evt.preventDefault();
     console.log(props);
-    props.editToDo(props);
+    props.editToDo(formValues.task, props.task.list_id, props.task.id);
+    props.editToggle(evt);
   }
 
   const onInputChange = evt => {
     const { name, value } = evt.target;
-
+    console.log(value);
     yup
       .reach(formSchema, name)
       .validate(value)
-      .then(valid => {
-        setFormErrors({
-          ...formErrors,
-          [name]: "",
+      .then(() => {
+        setFormValues({
+          ...formValues,
+          [name]: value,
         })
       })
       .catch(err => {
@@ -63,6 +66,7 @@ function ToDoEditForm ( props ) {
       [name]: value,
     });
   }
+  console.log(formValues);
 
   useEffect(() => {
     formSchema.isValid(formValues).then(valid => {
@@ -78,7 +82,7 @@ function ToDoEditForm ( props ) {
           <input
             name='task'
             type='text'
-            value={formValues.task}
+            value={formValues.task.todo}
             onChange={onInputChange}
             placeholder='Enter a Task'
           />
