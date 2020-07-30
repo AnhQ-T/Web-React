@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import {Link, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { 
@@ -15,10 +16,12 @@ import ToDoEditForm from './components/ToDoEditForm'
 
 function App() {
 
+  const [data, setData] = useState([])
+
   useEffect(() =>{
 
     axios.get('')
-
+// Rubric Item 3
       .then(res => {
         setData(res.data)
         console.log('hi', res.data)
