@@ -2,4 +2,4 @@
 
 Deployed Website Link
 
-https://app-lyart-beta.vercel.app/
+https://app.viriditymoon.vercel.app/dashboard

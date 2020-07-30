@@ -1,18 +1,30 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { 
   toggleEditing,
+  deleteToDo,
 }
   from '../actions';
+import ToDoEditForm from './ToDoEditForm';
 
-function ToDo(props) {
-  console.log(props.task)
-  const [active, setActive] = useState(false)
+
+function ToDo( props ) {
+  const [active, setActive] = useState(false);
+  const [toggleEditing, setToggleEditing] = useState(false);
+
+  let history = useHistory();
+
+  const deleteAToDo = (e) => {
+    e.preventDefault();
+    props.deleteToDo(props.task.list_id, props.task.id);
+  };
 
   const editToDo = (e) => {
     e.preventDefault();
-    props.toggleEditing(props);
+    setToggleEditing(!toggleEditing);
   };
+
 
   const markComplete = (e) => {
     e.preventDefault();
@@ -22,23 +34,30 @@ function ToDo(props) {
   const completed = active ? "line-through black" : "none";
 
   return (
-    <div className="ToDo">
-      <h2 style={{textDecoration: completed}}>{props.task.todo}</h2>
-      <button onClick={editToDo}>edit</button>
-      <button id={props.task.id} onClick={markComplete}>complete</button>
+    <div>
+      { 
+        toggleEditing
+      ? <ToDoEditForm key={props.task.id} task={props.task} editToggle={editToDo}/> 
+      : 
+      <div className="ToDo">
+        <h5 onClick={markComplete} style={{textDecoration: completed}}>{props.task.todo}</h5>
+        <span onClick={deleteAToDo}>X</span>
+        <button onClick={editToDo}>Edit</button>
+      </div>
+  }
     </div>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    isEditing: state.isEditing,
+    redirect: state.redirect,
   };
 };
 
 export default connect(
   mapStateToProps, 
   { 
-    toggleEditing, 
+    deleteToDo,
   }
 )(ToDo);

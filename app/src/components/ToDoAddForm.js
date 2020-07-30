@@ -65,7 +65,7 @@ function ToDoAddForm (props) {
 
   const onSubmit = evt => {
     evt.preventDefault()
-    console.log(props);
+    // console.log(props);
     props.addToDo(formValues);
   };
 

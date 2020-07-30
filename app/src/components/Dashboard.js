@@ -47,7 +47,7 @@ const ListContainer = styled.div`
   }
 ` 
 
-function Dashboard(props) {
+function Dashboard (props) {
   const [list, setList] = useState([]);
 
   const newList = {listname: 'New List'}
@@ -62,7 +62,6 @@ function Dashboard(props) {
   useEffect(() => {
     Axios().get(`/users/${userID}/lists`)
       .then(res => {
-        console.log(res);
         setList(res.data);
       })
       .catch(err => {
@@ -86,9 +85,9 @@ function Dashboard(props) {
         </div>
 
       </ListContainer>
+      <button onClick={addList}>Add a New List</button>
       {
         list.map(( list ) => {
-          console.log(list)
           return (
             <>
               <ToDoList key={list.id} list={list}/>

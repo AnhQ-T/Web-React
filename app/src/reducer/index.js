@@ -12,10 +12,7 @@ import {
 const initialState = {
     username: '',
     password: '',
-    task: {
-        task: '',
-        completed: false,
-    },
+    task: '',
     redirect: false,
     isEditing: false,
     error: '',
