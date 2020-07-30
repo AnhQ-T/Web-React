@@ -1,24 +1,16 @@
 import { axiosWithAuth } from '../utils';
-import { useHistory } from 'react-router-dom';
 
-export const FETCH_TODO_LISTS = 'FETCH_TODO_LISTS';
-export const DELETE_TODO_LISTS = 'DELETE_TODO_LISTS';
-export const ADD_TODO_LISTS = 'ADD_TODO_LISTS';
-export const EDIT_TODO_LISTS = 'EDIT_TODO_LISTS';
-export const FETCH_TODO = 'FETCH_TODO';
+// YES
+export const ADD_USER = 'ADD_USER';
+export const LOGIN_USER = 'LOGIN_USER';
+export const ACTION_SUCCESS = 'ACTION_SUCCESS';
+export const ACTION_FAILURE = 'ACTION_FAILURE';
+export const TOGGLE_EDITING = 'TOGGLE_EDITING';
+
+// LOGGERS
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO = 'ADD_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
-export const ACTION_SUCCESS = 'ACTION_SUCCESS';
-export const ACTION_FAILURE = 'ACTION_FAILURE';
-
-export const INPUT_CHANGE = 'INPUT_CHANGE';
-export const TOGGLE_EDITING = 'TOGGLE_EDITING';
-export const TOGGLE_ADDING = 'TOGGLE_ADDING';
-export const TOGGLE_COMPLETED = 'TOGGLE_COMPLETED';
-
-export const ADD_USER = 'ADD_USER';
-export const LOGIN_USER = 'LOGIN_USER';
 
 export const addUser = ( credentials ) => {
   
@@ -58,16 +50,13 @@ export const loginUser = ( credentials ) => {
     });
   };
 };
-
 export const deleteToDoLists = ( listID ) => {
     return dispatch => {
-      dispatch({ type: DELETE_TODO_LISTS });
       axiosWithAuth()
         .delete(`/users/${localStorage.getItem('id')}/lists/${listID}`)
         .then(res => {
           console.log(res, 'server response from delete')
           dispatch({ type: ACTION_SUCCESS });
-          dispatch({ type: ADD_TODO_LISTS })
         })
         .catch(err => {
           console.log(err);
@@ -94,7 +83,6 @@ export const deleteToDo = ( listID, toDoID )  => {
 
 export const addToDoList = ( body ) => {
   return dispatch => {
-    dispatch({ type: ADD_TODO_LISTS });
     axiosWithAuth()
       .post(`/users/${localStorage.getItem('id')}/lists`, body)
       .then(res => {
@@ -115,7 +103,6 @@ export const addToDo = ( body, listID ) => {
       .post(`/users/${localStorage.getItem('id')}/lists/${listID}/todos`, body)
       .then(res => {
         console.log(res);
-        dispatch({ type: ADD_TODO_LISTS })
         dispatch({ type: ACTION_SUCCESS });
       })
       .catch(err => {
@@ -125,14 +112,14 @@ export const addToDo = ( body, listID ) => {
   };
 };
 
-export const editToDoList = ( body ) => {
+export const editToDoList = ( body, id ) => {
   return dispatch => {
-    dispatch({ type: EDIT_TODO_LISTS });
+    console.log(body)
     axiosWithAuth()
-      .put(`/users/${localStorage.getItem('id')}/lists/${body.id}`, body)
+      .put(`/users/${localStorage.getItem('id')}/lists/${id}`, body)
       .then(res => {
         console.log(res);
-        dispatch({ type: ACTION_SUCCESS, payload: res.data});
+        dispatch({ type: ACTION_SUCCESS});
       })
       .catch(err => {
         console.log(err);
@@ -157,18 +144,6 @@ export const editToDo = ( body, listID, toDoID ) => {
   };
 };
 
-export const inputChange = () => {
-  return { type: INPUT_CHANGE}
-};
-
-export const toggleAdding = () => {
-  return { type: TOGGLE_ADDING }
-};
-
 export const toggleEditing = () => {
   return { type: TOGGLE_EDITING }
-};
-
-export const toggleCompleted = () => {
-  return { type: TOGGLE_COMPLETED }
 };

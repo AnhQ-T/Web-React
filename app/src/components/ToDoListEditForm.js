@@ -8,21 +8,18 @@ import {
 
 
 const ListEditForm = props => {
-    
+    console.log(props)
     const [list, setList] = useState(props.list);
 
     const changeHandler = ev => {
-      ev.persist();
       const value = ev.target.value;
-      setList({
-        ...list,
-        [ev.target.name]: value
-      });
+      console.log(value)
+      setList(value)
     };
-  
+
     const handleSubmit = e => {
       e.preventDefault();
-      props.editToDoList(list)
+      props.editToDoList({ listname: list}, props.id)
       props.setIsEditing(false)
     };
   
@@ -31,10 +28,9 @@ const ListEditForm = props => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            name="name"
+            name="list"
             onChange={changeHandler}
-            placeholder="name"
-            value={props.list}
+            value={list}
           />
         </form>
       </div>

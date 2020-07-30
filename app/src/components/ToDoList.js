@@ -48,7 +48,7 @@ function ToDoList (props) {
 
   return (
       <div className="ToDoList">
-        { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
+        { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname} id={props.list.id}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
         <button onClick={deleteList}>X</button>
         {
           toDos.map( task => {
