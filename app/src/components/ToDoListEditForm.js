@@ -37,15 +37,8 @@ const ListEditForm = props => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        addedList: state.addedList,
-
-    };
-};
-  
 export default connect(
-    mapStateToProps, 
+    null, 
     { 
         editToDoList,
     }

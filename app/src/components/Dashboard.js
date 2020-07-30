@@ -30,7 +30,7 @@ function Dashboard(props) {
       .catch(err => {
         console.log(err.message)
       })
-  }, [props.addedList])
+  }, [props.redirect])
 
 
   return (
@@ -54,8 +54,7 @@ function Dashboard(props) {
 const mapStateToProps = state => {
 
   return {
-    isAdding: state.isAdding,
-    addedList: state.addedList,
+    redirect: state.redirect,
 
   };
 };

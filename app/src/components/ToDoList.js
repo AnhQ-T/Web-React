@@ -5,7 +5,6 @@ import ListEditForm from './ToDoListEditForm';
 import { axiosWithAuth } from '../utils';
 import { 
   deleteToDoLists,
-  editToDoList,
   addToDo,
   } 
   from '../actions';
@@ -50,15 +49,6 @@ function ToDoList (props) {
       <div className="ToDoList">
         { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname} id={props.list.id}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
         <button onClick={deleteList}>X</button>
-        {
-          toDos.map( task => {
-            return (
-              // <div onClick={markCompleted}>
-                <ToDo key={task.id} task={task}/>
-              // </div>
-            )
-          })
-        }
         <button onClick={addNewToDo}>New Todo</button>
       </div>
     )
@@ -66,7 +56,7 @@ function ToDoList (props) {
 
 const mapStateToProps = state => {
   return {
-    addedList: state.addedList,
+    redirect: state.redirect,
 
   };
 };
@@ -74,7 +64,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps, 
   { 
-    editToDoList,
     addToDo,
     deleteToDoLists
   }
