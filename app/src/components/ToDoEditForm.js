@@ -106,7 +106,7 @@ function ToDoEditForm ( props ) {
           />
         </label> */}
       </div>
-      <button  type='submit' disabled={disabled}>submit</button>
+      <button id='editBtn' type='submit' disabled={disabled}>✔️</button>
       <button id='cancelBtn' onClick={cancelEdit}>❌</button>
       <p>{formErrors.task}</p>
       {/* <p>{formErrors.description}</p> */}
