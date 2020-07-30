@@ -1,6 +1,10 @@
 import { axiosWithAuth } from '../utils';
 import { useHistory } from 'react-router-dom';
 
+export const FETCH_TODO_LISTS = 'FETCH_TODO_LISTS';
+export const DELETE_TODO_LISTS = 'DELETE_TODO_LISTS';
+export const ADD_TODO_LISTS = 'ADD_TODO_LISTS';
+export const EDIT_TODO_LISTS = 'EDIT_TODO_LISTS';
 export const FETCH_TODO = 'FETCH_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO = 'ADD_TODO';
@@ -39,11 +43,12 @@ export const loginUser = ( credentials ) => {
   return dispatch => {
 
     console.log(credentials, 'Action from Credentials');
-    dispatch({ type: LOGIN_USER});
+    dispatch({ type: LOGIN_USER });
     axiosWithAuth()
       .post('/login', credentials)
       .then(res => {
         console.log(res);
+        localStorage.setItem('id', res.data.id);
         localStorage.setItem('token', res.data.token);
         dispatch({ type: ACTION_SUCCESS });
       })
@@ -54,32 +59,75 @@ export const loginUser = ( credentials ) => {
   };
 };
 
-
-
-export const fetchToDo = () => {
-    // I'm going to show one of you how to do this, you'll need a GET request for MVP.
-};
-
-export const deleteToDo = () => {
+export const deleteToDoLists = ( listID ) => {
     return dispatch => {
-      dispatch({ type: DELETE_TODO});
+      dispatch({ type: DELETE_TODO_LISTS });
       axiosWithAuth()
-        .delete('/users/1/lists/')
+        .delete(`/users/${localStorage.getItem('id')}/lists/${listID}`)
         .then(res => {
-          // dispatch({ type: ACTION_SUCCESS, payload: res.data});
+          console.log(res, 'server response from delete')
+          dispatch({ type: ACTION_SUCCESS });
         })
         .catch(err => {
           console.log(err);
-          // dispatch({ type: ACTION_FAILURE, payload: err.data });
+          dispatch({ type: ACTION_FAILURE, payload: err.data });
       });
   };
 };
 
-export const addToDo = () => {
+export const deleteToDo = ( listID, toDoID )  => {
   return dispatch => {
-    dispatch({ type: ADD_TODO});
+    dispatch({ type: DELETE_TODO});
     axiosWithAuth()
-      .post('/users/1/lists/3/todos')
+      .delete(`/users/${localStorage.getItem('id')}/lists/${listID}/todos/${toDoID}`)
+      .then(res => {
+        console.log(res, 'server response from delete')
+        dispatch({ type: ACTION_SUCCESS });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
+    });
+};
+};
+
+export const addToDoList = ( body ) => {
+  return dispatch => {
+    dispatch({ type: ADD_TODO_LISTS });
+    axiosWithAuth()
+      .post(`/users/${localStorage.getItem('id')}/lists`, body)
+      .then(res => {
+        console.log(res);
+        dispatch({ type: ACTION_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
+    });
+  };
+};
+
+export const addToDo = ( body, listID ) => {
+  return dispatch => {
+    dispatch({ type: ADD_TODO });
+    axiosWithAuth()
+      .post(`/users/${localStorage.getItem('id')}/lists/${listID}/todos`, body)
+      .then(res => {
+        console.log(res);
+        dispatch({ type: ACTION_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
+    });
+  };
+};
+
+export const editToDoList = ( body, listID ) => {
+  return dispatch => {
+    dispatch({ type: EDIT_TODO_LISTS });
+    axiosWithAuth()
+      .put(`/users/${localStorage.getItem('id')}/lists/${listID}`, body)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});
@@ -91,18 +139,18 @@ export const addToDo = () => {
   };
 };
 
-export const editToDo = () => {
+export const editToDo = ( body, listID, toDoID ) => {
   return dispatch => {
     dispatch({ type: EDIT_TODO});
     axiosWithAuth()
-      .put('/users/1/lists/1/todos/1')
+      .put(`/users/${localStorage.getItem('id')}/lists/${listID}/todos/${toDoID}`, body)
       .then(res => {
         console.log(res);
-        // dispatch({ type: ACTION_SUCCESS, payload: res.data});
+        dispatch({ type: ACTION_SUCCESS, payload: res.data});
       })
       .catch(err => {
         console.log(err);
-        // dispatch({ type: ACTION_FAILURE, payload: err.data });
+        dispatch({ type: ACTION_FAILURE, payload: err.data });
     });
   };
 };

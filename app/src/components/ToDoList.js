@@ -1,6 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import {axiosWithAuth as Axios} from '../utils';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+
+import { axiosWithAuth } from '../utils';
+import { 
+  deleteToDoLists,
+  editToDoList,
+  toggleEditing,
+
+  } 
+  from '../actions';
+
 import { useHistory } from 'react-router-dom';
 
 import styled from 'styled-components'
@@ -10,35 +19,39 @@ import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
 // import ToDoSearchBar from './ToDoSearchBar'
 
-import { 
-  toggleAdding,
-  
 
 
-} 
-  from '../actions';
+function ToDoList (props) {
+  const [data, setData] = useState([])
 
-let taskDisplay = true
-
-const TaskStyled = styled.div`
-  display: ${() => taskDisplay ? "block" : "none"};
-`
-
-
-
-
-
-function ToDoList(props) {
-  const [list, setList] = useState([])
-  
-  let history = useHistory();
+  const userID = localStorage.getItem('id')
+  // console.log(props);
+  useEffect(() => {
+    axiosWithAuth()
+      .get(`/users/${userID}/lists/${props.listID}/todos`)
+      .then((res) => {
+        // console.log(res);
+        setData(res.data);
+      })
+  }, [])
 
   const addToDo = (e) => {
     e.preventDefault();
-    props.toggleAdding(props);
+    props.toggleAdding();
   };
-    
-  // useEffect( () => {
+
+  const editToDo = (e) => {
+    e.preventDefault();
+    props.toggleEditing();
+  }
+
+  const deleteList = (e) => {
+    e.preventDefault();
+    props.deleteToDoLists( props.listID );
+
+  };
+
+// useEffect( () => {
   //   if (toggleEditing === true){
   //     history.push('/edit');
   //   };
@@ -52,43 +65,39 @@ function ToDoList(props) {
   //   };
 
   // }, [props.isAdding]);
-useEffect(() => {
-  
-  Axios().get('https://wunderlist2backend.herokuapp.com/api/users/1/lists/1/todos')
-    .then(res => {
-      console.log(res.data);
-      setList(res.data)
-    })
-    .catch()
-
-}, [])
 
   return (
-    <div className="ToDoList">
-      <button onClick={addToDo}>add</button>
-      {
-        list.map( task => {
-          return (
-            <ToDo key={task.id} task={task}/>
-          )
-        })
-      }
-    </div>
-  );
+      <div className="ToDoList">
+        
+        <button onClick={addToDo}>add</button>
+        <button onClick={deleteList}>X---X</button>
+        {
+          data.map( task => {
+            return (
+              
+              <div>
+                <button onClick={editToDo}>Edit your ToDo</button>
+                <ToDo key={task.id} taskID={task.id} task={task}/>
+              </div>
+            )
+          })
+        }
+      </div>
+    )
 };
 
 const mapStateToProps = state => {
   return {
-    isAdding: state.isAdding,
-    
-    
+    addedList: state.addedList,
+
   };
 };
 
 export default connect(
   mapStateToProps, 
   { 
-  toggleAdding,
-  
-  
-})(ToDoList);
+    deleteToDoLists,
+    editToDoList,
+    toggleEditing,
+  }
+)(ToDoList);

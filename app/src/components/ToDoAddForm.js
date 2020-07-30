@@ -10,28 +10,29 @@ import {
   from '../actions';
 
   
-const StyledDetails = styled.div`
-
-`
-
-
 const initialFormValues = {
   task: '',
   description: '',
 }
+
+  
+const StyledDetails = styled.div`
+`
+
+
 
 const initialFormErrors = {
   task: '',
   description: '',
 }
 
-function ToDoAddForm() {
-
-  const [formValues, setFormValues] = useState(initialFormValues)
+function ToDoAddForm (props) {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
-
-
+  const [formValues, setFormValues] = useState({
+    task: props.task,
+    // description: props.description,
+  });
 
   const onInputChange = evt => {
     const { name, value } = evt.target
@@ -54,19 +55,19 @@ function ToDoAddForm() {
       ...formValues,
       [name]: value,
     });
-  }
+  };
 
   useEffect(() => {
     formSchema.isValid(formValues).then(valid => {
       setDisabled(!valid)
     })
-  }, [formValues])
+  }, [formValues]);
 
   const onSubmit = evt => {
     evt.preventDefault()
-    // console.log(props);
-    // props.addToDo(props);
-  }
+    console.log(props);
+    props.addToDo(formValues);
+  };
 
   return (
     <form classname = 'form-container' onSubmit = {onSubmit}>
@@ -83,7 +84,7 @@ function ToDoAddForm() {
         </label>
         <br />
 
-        <label>Description
+        {/* <label>Description
           <input
             name='description'
             type='text'
@@ -91,7 +92,7 @@ function ToDoAddForm() {
             onChange={onInputChange}
             placeholder='Enter the Description'
           />
-        </label>
+        </label> */}
       </div>
       <button id='submitBtn' disabled = {disabled}>Submit</button>
       <button id='cancelBtn'>Cancel</button>
@@ -103,7 +104,9 @@ function ToDoAddForm() {
 
 const mapStateToProps = state => {
   return {
-    
+    task: state.task,
+    // description: state.description,
+
   };
 };
 
