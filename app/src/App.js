@@ -15,19 +15,19 @@ import ToDoEditForm from './components/ToDoEditForm'
 
 function App() {
 
-  useEffect(() =>{
+  // useEffect(() =>{
 
-    axios.get('')
+  //   axios.get('')
 
-      .then(res => {
-        setData(res.data)
-        console.log('hi', res.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  //     .then(res => {
+  //       setData(res.data)
+  //       console.log('hi', res.data)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
 
-  }, [])
+  // }, [])
 
   return (
     <div className="App">

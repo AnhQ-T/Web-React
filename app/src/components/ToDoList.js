@@ -59,7 +59,9 @@ function ToDoList (props) {
           })
         }
         <button onClick={deleteList}>X</button>
+
         <button onClick={addNewToDo}>New Todo</button>
+        
       </div>
     )
 };
