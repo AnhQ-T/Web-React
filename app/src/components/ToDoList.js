@@ -28,11 +28,12 @@ function ToDoList (props) {
         console.log(res);
         setToDos(res.data);
       })
-  }, [])
+  }, [props.redirect]);
 
   const addNewToDo = (e) => {
     e.preventDefault();
     props.addToDo({todo: "New Todo"}, props.list.id);
+    
   };
 
   const toggleEditing = (e) => {
@@ -49,6 +50,7 @@ function ToDoList (props) {
   return (
       <div className="ToDoList">
         { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname} id={props.list.id}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
+        <span onClick={deleteList}>X (list)</span>
         {
           toDos.map( task => {
             return (
@@ -58,7 +60,7 @@ function ToDoList (props) {
             )
           })
         }
-        <button onClick={deleteList}>X</button>
+        
         <button onClick={addNewToDo}>New Todo</button>
       </div>
     )

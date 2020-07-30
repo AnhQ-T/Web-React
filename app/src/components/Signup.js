@@ -68,7 +68,7 @@ function Signup(props) {
 
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
-    console.log(name, value);
+    // console.log(name, value);
 
     yup
     .reach(formSchema, name)
@@ -95,9 +95,9 @@ function Signup(props) {
 
 
   const onSubmit = (evt) => {
-    console.log(evt);
+    // console.log(evt);
     evt.preventDefault();
-    console.log(credentials);
+    // console.log(credentials);
     props.addUser(credentials);
     history.push('/dashboard');
   }

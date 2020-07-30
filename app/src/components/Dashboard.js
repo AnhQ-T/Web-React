@@ -24,7 +24,6 @@ function Dashboard (props) {
   useEffect(() => {
     Axios().get(`/users/${userID}/lists`)
       .then(res => {
-        console.log(res);
         setList(res.data);
       })
       .catch(err => {
@@ -39,7 +38,6 @@ function Dashboard (props) {
       <button onClick={addList}>New List</button>
       {
         list.map(( list ) => {
-          console.log(list)
           return (
             <>
               <ToDoList key={list.id} list={list}/>

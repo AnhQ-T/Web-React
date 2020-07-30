@@ -8,12 +8,12 @@ import {
 
 
 const ListEditForm = props => {
-    console.log(props)
+    // console.log(props)
     const [list, setList] = useState(props.list);
 
     const changeHandler = ev => {
       const value = ev.target.value;
-      console.log(value)
+      // console.log(value)
       setList(value)
     };
 
