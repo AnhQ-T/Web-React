@@ -5,7 +5,8 @@ import {
 }
   from '../actions';
 
-function ToDo(props, {task}) {
+function ToDo(props) {
+  console.log(props.task)
   const [active, setActive] = useState(false)
 
   const editToDo = (e) => {
@@ -20,9 +21,9 @@ function ToDo(props, {task}) {
 
   return (
     <div className="ToDo">
-      <h2>{props.task}</h2>
+      <h2>{props.task.todo}</h2>
       <button onClick={editToDo}>edit</button>
-      <button id={task.id} onClick={markComplete}>complete</button>
+      <button id={props.task.id} onClick={markComplete}>complete</button>
     </div>
   );
 };

@@ -1,11 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useLocation, useParams, useHistory } from "react-router-dom";
-import { axiosWithAuth } from '../utils';
-import * as yup from 'yup';
-import formSchema from '../validation/formSchemaAndre';
-import styled from 'styled-components';
-import ToDoList from './ToDoList';
 import { 
   editToDoList,
   
@@ -13,13 +7,7 @@ import {
   from '../actions';
 
 
-import axios from "axios";
-  
-  const initialList = {
-    listname: '',
-  };
-  
-const ToDoListEditForm = props => {
+const ListEditForm = props => {
     
     const [list, setList] = useState(props.list);
 
@@ -35,6 +23,7 @@ const ToDoListEditForm = props => {
     const handleSubmit = e => {
       e.preventDefault();
       props.editToDoList(list)
+      props.setIsEditing(false)
     };
   
     return (
@@ -64,5 +53,5 @@ export default connect(
     { 
         editToDoList,
     }
-)(ToDoListEditForm);
+)(ListEditForm);
   

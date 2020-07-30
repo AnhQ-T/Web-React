@@ -1,74 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import ToDoListEditForm from './ToDoListEditForm';
+import ListEditForm from './ToDoListEditForm';
 
 import { axiosWithAuth } from '../utils';
 import { 
   deleteToDoLists,
   editToDoList,
-  toggleEditing,
-
+  addToDo,
   } 
   from '../actions';
 
 import { useHistory } from 'react-router-dom';
-
 import styled from 'styled-components'
-
-import ToDoEditForm from './ToDoEditForm';
-import ToDoAddForm from './ToDoAddForm';
 import ToDo from './ToDo'
 
 
 
 function ToDoList (props) {
-  const [data, setData] = useState([])
+  const [toDos, setToDos] = useState([])
   const [isEditing, setIsEditing] = useState(false);
 
-
   const userID = localStorage.getItem('id')
-  // console.log(props);
   useEffect(() => {
     axiosWithAuth()
-      .get(`/users/${userID}/lists/${props.listID}/todos`)
+      .get(`/users/${userID}/lists/${props.list.id}/todos`)
       .then((res) => {
         // console.log(res);
-        setData(res.data);
+        setToDos(res.data);
       })
   }, [])
 
-  const addToDo = (e) => {
+  const addNewToDo = (e) => {
     e.preventDefault();
-    props.toggleAdding();
+    props.addToDo({todo: "New Todo"}, props.list.id);
   };
 
-  const editList = (e) => {
+  const toggleEditing = (e) => {
     e.preventDefault();
     setIsEditing(!isEditing);
   };
 
   const deleteList = (e) => {
     e.preventDefault();
-    props.deleteToDoLists( props.listID );
+    props.deleteToDoLists( props.list.id );
 
   };
 
   return (
       <div className="ToDoList">
-        
-
-        { isEditing ? <ToDoListEditForm list={props.list}/> : <h2 onClick={editList}>{props.list}</h2>}
-        <button onClick={addToDo}>add</button>
+        { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
+        <button onClick={deleteList}>X</button>
         {
-          data.map( task => {
+          toDos.map( task => {
             return (
               // <div onClick={markCompleted}>
-                <ToDo key={task.id} taskID={task.id} task={task}/>
+                <ToDo key={task.id} task={task}/>
               // </div>
             )
           })
         }
-        <button onClick={deleteList}>X</button>
+        <button onClick={addNewToDo}>New Todo</button>
       </div>
     )
 };
@@ -84,6 +75,7 @@ export default connect(
   mapStateToProps, 
   { 
     editToDoList,
-    toggleEditing,
+    addToDo,
+    deleteToDoLists
   }
 )(ToDoList);

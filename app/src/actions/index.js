@@ -67,6 +67,7 @@ export const deleteToDoLists = ( listID ) => {
         .then(res => {
           console.log(res, 'server response from delete')
           dispatch({ type: ACTION_SUCCESS });
+          dispatch({ type: ADD_TODO_LISTS })
         })
         .catch(err => {
           console.log(err);
@@ -98,7 +99,7 @@ export const addToDoList = ( body ) => {
       .post(`/users/${localStorage.getItem('id')}/lists`, body)
       .then(res => {
         console.log(res);
-        dispatch({ type: ACTION_SUCCESS, payload: res.data });
+        dispatch({ type: ACTION_SUCCESS });
       })
       .catch(err => {
         console.log(err);
@@ -114,7 +115,8 @@ export const addToDo = ( body, listID ) => {
       .post(`/users/${localStorage.getItem('id')}/lists/${listID}/todos`, body)
       .then(res => {
         console.log(res);
-        dispatch({ type: ACTION_SUCCESS, payload: res.data });
+        dispatch({ type: ADD_TODO_LISTS })
+        dispatch({ type: ACTION_SUCCESS });
       })
       .catch(err => {
         console.log(err);
@@ -123,11 +125,11 @@ export const addToDo = ( body, listID ) => {
   };
 };
 
-export const editToDoList = ( body, listID ) => {
+export const editToDoList = ( body ) => {
   return dispatch => {
     dispatch({ type: EDIT_TODO_LISTS });
     axiosWithAuth()
-      .put(`/users/${localStorage.getItem('id')}/lists/${listID}`, body)
+      .put(`/users/${localStorage.getItem('id')}/lists/${body.id}`, body)
       .then(res => {
         console.log(res);
         dispatch({ type: ACTION_SUCCESS, payload: res.data});
