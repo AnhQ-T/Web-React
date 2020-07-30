@@ -13,7 +13,15 @@ import {
 const initialFormErrors = {
   task: '',
 }
-
+const FormContainer = styled.div`
+  display: flex;
+  input{ 
+    width: 95%;
+  }
+  button{
+    margin-left: 1%;
+  }
+`
 function ToDoEditForm ( props ) {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(true)
@@ -75,10 +83,9 @@ function ToDoEditForm ( props ) {
   }, [formValues])
 
   return (
-    <form className='edit-form-container' onSubmit={onSubmit}>
-      <h3>Edit Tasks</h3>
+    <FormContainer className='edit-form-container' onSubmit={onSubmit}>
       <div id='edit-task-container'>
-        <label>Task
+        <label>
           <input
             name='task'
             type='text'
@@ -99,11 +106,11 @@ function ToDoEditForm ( props ) {
           />
         </label> */}
       </div>
-      <button id='editBtn' type='submit' disabled={disabled}>Submit</button>
-      <button id='cancelBtn' onClick={cancelEdit}>Cancel</button>
+      <button  type='submit' disabled={disabled}>submit</button>
+      <button id='cancelBtn' onClick={cancelEdit}>❌</button>
       <p>{formErrors.task}</p>
       {/* <p>{formErrors.description}</p> */}
-    </form>
+    </FormContainer>
   );
 };
 

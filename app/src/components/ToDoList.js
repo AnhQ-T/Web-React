@@ -14,6 +14,57 @@ import styled from 'styled-components'
 import ToDo from './ToDo';
 
 
+const ListContainer = styled.div`
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  color: black;
+  border-radius: 10px;
+  padding: 2%;
+  align-items: center;
+  margin: 1% 0;
+  
+  div{
+    width: 100%;
+  }
+
+  #top{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    & h2 {
+      width: 99%;
+      padding-left: 6%;
+      text-align: center;
+    }
+    & button {
+      color: red;
+      border: none;
+      border-radius: 4px;
+      background: none; 
+      padding: 0.6% 1.5%;
+      &:hover{
+        cursor: pointer;
+        background: #FFD4D4;
+      }
+    }
+  }
+
+  #newTaskBtn{
+    width: 40%;
+    color: green;
+    border: none;
+    padding: 2%;
+    border-radius: 5px;
+    &:hover{
+      cursor: pointer;
+      background:#E3E3E3;
+    }
+    
+  }
+` 
+
 
 function ToDoList (props) {
   const [toDos, setToDos] = useState([]);
@@ -47,9 +98,11 @@ function ToDoList (props) {
   };
 
   return (
-      <div className="ToDoList">
+      <ListContainer>
+        <div id="top">
         { isEditing ? <ListEditForm setIsEditing={setIsEditing} list={props.list.listname} id={props.list.id}/> : <h2 onClick={toggleEditing}>{props.list.listname}</h2>}
-        <span onClick={deleteList}>X</span>
+        <button onClick={deleteList}>❌</button>
+        </div>
         {
           toDos.map( task => {
             return (
@@ -58,8 +111,8 @@ function ToDoList (props) {
           })
         }
         
-        <button onClick={addNewToDo}>Add a New Task</button>
-      </div>
+        <button id="newTaskBtn"onClick={addNewToDo}>+Task</button>
+      </ListContainer>
     )
 };
 

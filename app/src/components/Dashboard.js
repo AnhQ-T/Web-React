@@ -9,43 +9,34 @@ import {
 } 
   from '../actions';
 
-const ListContainer = styled.div`
-
+  const DashboardContainer = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
-  background: white;
-  flex-wrap: wrap;
-  color: black;
-  border-radius: 10px;
-  padding: 5%;
   align-items: center;
-  #top{
-    display: flex;
-    align-items: center;
-    & h2 {
-      width: 85%;
-      text-align: center;
-    }
-    & button {
+    #new-list{
+      width: 5%;
+      color: white;
       border: none;
-      background: none;
-      color: red;
-      padding: 3%;
+      padding: 0.5%;
+      border-radius: 5px;
+      background: #7cae7a;
+      margin-top: 1%;
       &:hover{
         cursor: pointer;
+        background:#E3E3E3;
+        border: 2px solid #E3E3E3;
+        color: green;
       }
     }
-  }
-  #newTaskBtn{
-    width: 40%;
-    color: green;
-    border: none;
-    padding: 4%;
-    border-radius: 5px; 
-    border-right: 2px solid 
-    
-  }
-` 
+  `
+  const BigListConatiner = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  
+  `
 
 function Dashboard (props) {
   const [list, setList] = useState([]);
@@ -71,21 +62,9 @@ function Dashboard (props) {
 
 
   return (
-    <div>
-      <h1>Wunderlist</h1>
-      <button onClick={addList}>New List</button>
-      <ListContainer>
-        <div id="top">
-          <h2>List name</h2>
-          <button id="removeList">X</button>
-        </div>
-          <button id="newTaskBtn">+Task</button>
-        <div>
-          <div>Get Bannanas</div>
-        </div>
-
-      </ListContainer>
-      <button onClick={addList}>Add a New List</button>
+    <DashboardContainer>
+      <button id="new-list" onClick={addList}>+List</button>     
+      <BigListConatiner>
       {
         list.map(( list ) => {
           return (
@@ -95,7 +74,8 @@ function Dashboard (props) {
           )
         })
       }
-    </div>
+      </BigListConatiner>
+    </DashboardContainer>
   );
 };
 
