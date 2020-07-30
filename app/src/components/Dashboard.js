@@ -9,7 +9,7 @@ import {
   from '../actions';
 
 
-function Dashboard(props) {
+function Dashboard (props) {
   const [list, setList] = useState([]);
 
   const newList = {listname: 'New List'}
@@ -24,7 +24,6 @@ function Dashboard(props) {
   useEffect(() => {
     Axios().get(`/users/${userID}/lists`)
       .then(res => {
-        console.log(res);
         setList(res.data);
       })
       .catch(err => {
@@ -36,10 +35,9 @@ function Dashboard(props) {
   return (
     <div className="dashboard">
       <h1>Wunderlist</h1>
-      <button onClick={addList}>New List</button>
+      <button onClick={addList}>Add a New List</button>
       {
         list.map(( list ) => {
-          console.log(list)
           return (
             <>
               <ToDoList key={list.id} list={list}/>

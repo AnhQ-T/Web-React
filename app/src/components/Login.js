@@ -66,8 +66,6 @@ function Login (props) {
 
   let history = useHistory();
 
-  console.log(props.data);
-
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
 

@@ -12,8 +12,6 @@ import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './components/Dashboard';
 import './App.css';
 
-import ToDoEditForm from './components/ToDoEditForm'
-
 function App() {
 
   const [data, setData] = useState([])
@@ -29,7 +27,6 @@ function App() {
       .catch(err => {
         console.log(err)
       })
-
   }, [])
 
   return (
@@ -48,12 +45,8 @@ function App() {
         component={Login}
       />
       <PrivateRoute 
-        path="/dashboard"
+        exact path="/dashboard"
         component={Dashboard}
-      />
-      <PrivateRoute 
-        path='/dashboard/edit'
-        component={ToDoEditForm}
       />
 
     </div>
