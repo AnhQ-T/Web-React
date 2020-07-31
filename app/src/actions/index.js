@@ -1,8 +1,6 @@
 import { axiosWithAuth } from '../utils';
 
 // Actions
-export const ADD_USER = 'ADD_USER';
-export const LOGIN_USER = 'LOGIN_USER';
 export const ACTION_SUCCESS = 'ACTION_SUCCESS';
 export const ACTION_FAILURE = 'ACTION_FAILURE';
 export const TOGGLE_EDITING = 'TOGGLE_EDITING';
@@ -13,15 +11,6 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO = 'ADD_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
-
-export const loginUser = ( credentials ) => {
-  return dispatch => {
-
-    // console.log(credentials, 'Action from Credentials');
-    dispatch({ type: LOGIN_USER });
-
-  };
-};
 
 
 export const deleteToDoLists = ( listID ) => {
@@ -129,8 +118,4 @@ export const editToDo = ( body, listID, toDoID ) => {
 
 export const toggleEditing = () => {
   return { type: TOGGLE_EDITING }
-};
-
-export const clearError = () => (dispatch) => {
-  dispatch({ type: CLEAR_ERROR });
 };

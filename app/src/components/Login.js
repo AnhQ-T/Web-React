@@ -57,7 +57,6 @@ function Login (props) {
   const [formErrors, setFormErrors] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(true);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [data, setData] = useState({})
 
   let history = useHistory();
 

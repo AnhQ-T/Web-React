@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { axiosWithAuth } from '../utils';
 import React, { useState, useEffect } from 'react';
-import { Link, Route, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaZavier'
@@ -56,7 +56,6 @@ function Signup () {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(true);
-  const [data, setData] = useState({});
 
   let history = useHistory();
 
@@ -107,7 +106,6 @@ function Signup () {
   }, [formValues])
 
   const onSubmit = (evt) => {
-    // console.log(evt);
     evt.preventDefault();
     addUser(formValues);
   }
