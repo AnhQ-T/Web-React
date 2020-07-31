@@ -1,11 +1,10 @@
 import {
-    ADD_USER,
-    LOGIN_USER,
     EDIT_TODO,
     ACTION_SUCCESS,
     ACTION_FAILURE,
     TOGGLE_EDITING,
-    DELETE_TODO
+    DELETE_TODO,
+    CLEAR_ERROR,
 } from '../actions';
 
 
@@ -21,13 +20,10 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
     console.log(action);
     switch (action.type) {
-        case ADD_USER :
+        case CLEAR_ERROR:
             return {
                 ...state,
-            };
-        case LOGIN_USER :
-            return {
-                ...state,
+                error: null,
             };
         case EDIT_TODO :
             return {

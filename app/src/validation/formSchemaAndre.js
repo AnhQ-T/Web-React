@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 const formSchema = yup.object().shape({
-    task: yup
+    todo: yup
         .string()
         .min(1, "Task is Required")
         .required('Task is Required'),
