@@ -9,7 +9,7 @@ import styled from 'styled-components'
 const initialFormValues = {
   todo: '',
 }
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   display: flex;
   input{ 
     width: 95%;
