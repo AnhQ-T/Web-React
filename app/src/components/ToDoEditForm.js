@@ -10,12 +10,16 @@ const initialFormValues = {
   todo: '',
 }
 const FormContainer = styled.form`
+width: 100%;
   display: flex;
   input{ 
     width: 95%;
   }
   button{
     margin-left: 1%;
+  }
+  #edit-task-container{
+    width: 95%
   }
 `
 function ToDoEditForm ( props ) {
@@ -39,8 +43,6 @@ function ToDoEditForm ( props ) {
       });
   };
 
-  let history = useHistory();
-
   const cancelEdit = (e) => {
     e.preventDefault();
     props.editToggle();
@@ -56,6 +58,10 @@ function ToDoEditForm ( props ) {
         setFormValues({
           ...formValues,
           [name]: value,
+        })
+        setFormErrors({
+          ...formErrors,
+          [name]: "",
         })
       })
       .catch(err => {
@@ -84,8 +90,7 @@ function ToDoEditForm ( props ) {
   }, [formValues])
 
   return (
-    <FormContainer className='edit-form-container'>
-      <form onSubmit={onSubmit}>
+    <FormContainer className='edit-form-container' onSubmit={onSubmit}>
         <div id='edit-task-container'>
         <label>
           <input
@@ -98,10 +103,9 @@ function ToDoEditForm ( props ) {
         </label>
         <br />
         </div>
-        <button id='editBtn' type='submit'>✔️</button>
+        <button id='editBtn' disabled={disabled} type='submit'>✔️</button>
         <button id='cancelBtn' onClick={cancelEdit}>❌</button>
         <p>{formErrors.task}</p>
-      </form>
     </FormContainer>
   );
 };

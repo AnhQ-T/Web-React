@@ -86,6 +86,10 @@ function Signup () {
         ...formValues,
         [name]: value,
       })
+      setFormErrors({
+        ...formErrors,
+        [name]: "",
+      })
     })
     .catch(err => {
       setFormErrors({

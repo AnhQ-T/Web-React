@@ -33,6 +33,9 @@ const ListContainer = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
+    &:hover{
+        cursor: pointer;
+      }
     & h2 {
       width: 99%;
       padding-left: 6%;

@@ -82,9 +82,9 @@ function Login (props) {
     .validate(value)
 
     .then(() => {
-      setFormValues({
-        ...formValues,
-        [name]: value,
+      setFormErrors({
+        ...formErrors,
+        [name]: "",
       })
     })
     .catch(err => {
