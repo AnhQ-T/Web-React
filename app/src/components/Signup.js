@@ -124,17 +124,6 @@ function Signup () {
           />
         </div>
         <div className='errors'>{formErrors.username}</div>
-
-        {/* <div>
-          <label>Email</label><br />
-          <input
-            type="email"
-            name="email"
-            onChange={onInputChange}
-            value={formValues.email}
-          />
-        </div> */}
-        {/* <div className='errors'>{formErrors.email}</div> */}
         <div>
           <label>Password</label><br />
           <input
@@ -145,16 +134,6 @@ function Signup () {
           />
         </div>
         <div className='errors'>{formErrors.password}</div>
-        {/* <div>
-          <label>Verify Password</label><br />
-          <input
-            type="password"
-            name="verifyPassword"
-            onChange={onInputChange}
-            value={formValues.verifyPassword}
-          ></input>
-        </div>
-        <div className='errors'>{formErrors.verifyPassword}</div> */}
         <button className='btn' type='submit' disabled={disabled}>Sign-Up</button>
       </form>
     </SignUpBox>
