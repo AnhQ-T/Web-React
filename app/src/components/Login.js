@@ -1,16 +1,13 @@
 import { connect } from 'react-redux';
 import React, { useState, useEffect }from 'react';
 import { useHistory } from 'react-router-dom';
+import { axiosWithAuth } from '../utils'
 import styled from 'styled-components';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaZavier'
-import { 
-  loginUser,
-
-} from '../actions';
 
 
-const initialFormErrors = {
+const initialFormValues = {
   username: '',
   password: '',
 };
@@ -57,26 +54,37 @@ const LoginBox = styled.div`
 
 
 function Login (props) {
-  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [formErrors, setFormErrors] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(true);
-  const [credentials, setCredentials] = useState({
-    username: props.username,
-    password: props.password,
-  });
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const [data, setData] = useState({})
 
   let history = useHistory();
 
+  const loginUser = (formValues) => {
+    axiosWithAuth()
+    .post('/login', formValues)
+    .then(res => {
+      console.log(res);
+      localStorage.setItem('id', res.data.id);
+      localStorage.setItem('token', res.data.token);
+    })
+    .catch(err => {
+      console.log(err);      
+    });
+  };
+
   const onInputChange = (evt) => {
     const { name, value } = evt.target;
-
+    console.log(value);
     yup
     .reach(formSchema, name)
 
     .validate(value)
 
-    .then( () => {
-      setCredentials({
-        ...credentials,
+    .then(() => {
+      setFormValues({
+        ...formValues,
         [name]: value,
       })
     })
@@ -87,24 +95,24 @@ function Login (props) {
       })
     })
 
-    setCredentials({
-      ...credentials,
+    setFormValues({
+      ...formValues,
       [name]: value,
     });
   };
 
   const onSubmit = (evt) => {
     evt.preventDefault();
-    console.log(credentials);
-    props.loginUser(credentials);
+    console.log(formValues);
+    loginUser(formValues);
     history.push('/dashboard');
   };
 
   useEffect(() => {
-    formSchema.isValid(credentials).then(valid => {
+    formSchema.isValid(formValues).then(valid => {
       setDisabled(!valid)
     })
-  }, [credentials])
+  }, [formValues])
 
   return (
     <LoginBox>
@@ -117,7 +125,7 @@ function Login (props) {
                 type="text"
                 name="username"
                 onChange={onInputChange}
-                value={credentials.username}
+                value={formValues.username}
               />
             </label>
           </div>
@@ -129,30 +137,18 @@ function Login (props) {
                 type="password"
                 name="password"
                 onChange={onInputChange}
-                value={credentials.password}
+                value={formValues.password}
               ></input>
             </label>
           </div>
           <div className='errors'>{formErrors.password}</div>
-          <button className='btn' type='submit'>Login</button>
+          <button className='btn' type='submit' disabled={disabled}>Login</button>
         </form>
       </div>
     </LoginBox>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    username: state.username,
-    password: state.password,
-    data: state.data,
-  };
-};
-
 export default connect(
-  mapStateToProps, 
-  { 
-  loginUser,
-
-  
-})(Login);
+  null, 
+  {})(Login);
