@@ -9,7 +9,6 @@ const formSchema = yup.object().shape({
     .string()
     .min(3, "Password must be at least 3 characters")
     .required(),
-
 })
 
 export default formSchema

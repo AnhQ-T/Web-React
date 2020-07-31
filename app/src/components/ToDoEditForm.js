@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { axiosWithAuth } from '../utils';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaAndre'
 import styled from 'styled-components'
-import { 
-  editToDo,
-  
-} 
-  from '../actions';
 
-const initialFormErrors = {
-  task: '',
+const initialFormValues = {
+  todo: '',
 }
-const FormContainer = styled.div`
+const FormContainer = styled.form`
+width: 100%;
   display: flex;
   input{ 
     width: 95%;
@@ -21,35 +18,35 @@ const FormContainer = styled.div`
   button{
     margin-left: 1%;
   }
+  #edit-task-container{
+    width: 95%
+  }
 `
 function ToDoEditForm ( props ) {
-  const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [formErrors, setFormErrors] = useState(initialFormValues)
   const [disabled, setDisabled] = useState(true)
   const [active, setActive] = useState(false);
-  const [formValues, setFormValues] = useState({
-    task: props.task,
-  });
+  const [formValues, setFormValues] = useState(props.task);
 
-  console.log(props);
-
-  let history = useHistory();
+  const editToDo = ( formValues ) => {
+  
+    const newToDo = {
+      todo: formValues.todo
+    };
+    axiosWithAuth()
+        .put(`/users/${localStorage.getItem('id')}/lists/${formValues.list_id}/todos/${formValues.id}`, newToDo)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+      });
+  };
 
   const cancelEdit = (e) => {
     e.preventDefault();
-    setActive(!active);
+    props.editToggle();
   };
-
-  if ( active ) {
-    history.push('/dashboard');
-  };
-
-
-  const onSubmit = evt => {
-    evt.preventDefault();
-    console.log(props);
-    props.editToDo(formValues.task, props.task.list_id, props.task.id);
-    props.editToggle(evt);
-  }
 
   const onInputChange = evt => {
     const { name, value } = evt.target;
@@ -61,6 +58,10 @@ function ToDoEditForm ( props ) {
         setFormValues({
           ...formValues,
           [name]: value,
+        })
+        setFormErrors({
+          ...formErrors,
+          [name]: "",
         })
       })
       .catch(err => {
@@ -74,7 +75,13 @@ function ToDoEditForm ( props ) {
       [name]: value,
     });
   }
-  console.log(formValues);
+
+  const onSubmit = ( evt ) => {
+    evt.persist();
+    console.log("On Submit", formValues);
+    editToDo(formValues);
+    props.editToggle(evt);
+  };
 
   useEffect(() => {
     formSchema.isValid(formValues).then(valid => {
@@ -84,32 +91,21 @@ function ToDoEditForm ( props ) {
 
   return (
     <FormContainer className='edit-form-container' onSubmit={onSubmit}>
-      <div id='edit-task-container'>
+        <div id='edit-task-container'>
         <label>
           <input
-            name='task'
+            name='todo'
             type='text'
-            value={formValues.task.todo}
+            value={formValues.todo}
             onChange={onInputChange}
             placeholder='Enter a Task'
           />
         </label>
         <br />
-
-        {/* <label>Description
-          <input
-            name='description'
-            type='text'
-            value={formValues.description}
-            onChange={onInputChange}
-            placeholder='Enter the Description'
-          />
-        </label> */}
-      </div>
-      <button id='editBtn' type='submit' disabled={disabled}>✔️</button>
-      <button id='cancelBtn' onClick={cancelEdit}>❌</button>
-      <p>{formErrors.task}</p>
-      {/* <p>{formErrors.description}</p> */}
+        </div>
+        <button id='editBtn' disabled={disabled} type='submit'>✔️</button>
+        <button id='cancelBtn' onClick={cancelEdit}>❌</button>
+        <p>{formErrors.task}</p>
     </FormContainer>
   );
 };
@@ -122,7 +118,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps, 
-  { editToDo,
+  { 
 
   }
 )(ToDoEditForm);

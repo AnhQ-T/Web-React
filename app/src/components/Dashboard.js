@@ -25,7 +25,7 @@ import {
       &:hover{
         cursor: pointer;
         background:#E3E3E3;
-        border: 2px solid #E3E3E3;
+
         color: green;
       }
     }

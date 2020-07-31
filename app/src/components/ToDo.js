@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { axiosWithAuth } from '../utils';
 import { 
-  toggleEditing,
   deleteToDo,
+  toggleRedirect
 }
   from '../actions';
 import ToDoEditForm from './ToDoEditForm';
 
-const TaskContianer = styled.div`
+const TaskContainer = styled.div`
   display: flex;
   border-right: 1px solid #F3F3F3;
   border-bottom: 1px solid #F3F3F3;
@@ -68,9 +69,10 @@ function ToDo( props ) {
     props.deleteToDo(props.task.list_id, props.task.id);
   };
 
-  const editToDo = (e) => {
-    e.preventDefault();
+  const editToDoToggle = (e) => {
+    console.log('EditToDoToggle');
     setToggleEditing(!toggleEditing);
+    props.toggleRedirect();
   };
 
 
@@ -83,30 +85,25 @@ function ToDo( props ) {
   const textComp = active ? "grey" : "black"
   
   return (
-    <TaskContianer>
+    <TaskContainer>
       { 
         toggleEditing
-      ? <ToDoEditForm key={props.task.id} task={props.task} editToggle={editToDo}/> 
+      ? <ToDoEditForm key={props.task.id} task={props.task} editToggle={editToDoToggle}/> 
       : 
       <div className="todo">
         <h5 onClick={markComplete} style={{textDecoration: completed, color: textComp}}>{props.task.todo}</h5>
         <button id="remove" onClick={deleteAToDo}>🗑️</button>
-        <button id="edit" onClick={editToDo}>✏️</button>
+        <button id="edit" onClick={editToDoToggle}>✏️</button>
       </div>
   }
-    </TaskContianer>
+    </TaskContainer>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    redirect: state.redirect,
-  };
-};
-
 export default connect(
-  mapStateToProps, 
+  null, 
   { 
     deleteToDo,
+    toggleRedirect
   }
 )(ToDo);

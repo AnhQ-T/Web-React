@@ -1,22 +1,18 @@
 import { connect } from 'react-redux';
-
+import { axiosWithAuth } from '../utils';
 import React, { useState, useEffect } from 'react';
-import { Link, Route, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import formSchema from '../validation/formSchemaZavier'
-import { 
-  addUser,
 
-} 
-  from '../actions';
-
-const initialFormErrors = {
+const initialFormValues = {
   username: '',
   // email: '',
   password: '',
   // verifyPassword: '',
 };
+
 
 const SignUpBox = styled.div`
   background: white;
@@ -56,19 +52,29 @@ const SignUpBox = styled.div`
   
 `
 
-function Signup(props) {
-  const [formErrors, setFormErrors] = useState(initialFormErrors);
+function Signup () {
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const [formErrors, setFormErrors] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(true);
-  const [credentials, setCredentials] = useState({
-    username: props.username,
-    password: props.password,
-  });
 
   let history = useHistory();
 
+  const addUser = (formValues) => {
+    axiosWithAuth()
+    .post('/register', formValues)
+    .then(res => {
+      console.log(res);
+      localStorage.setItem('id', res.data.data.id);
+      localStorage.setItem('token', res.data.token);
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+    history.push('/dashboard');
+  }
   const onInputChange = (evt) => {
-    const { name, value } = evt.target;
-    // console.log(name, value);
+    const { name, value } = evt.target
+    console.log( value );
 
     yup
     .reach(formSchema, name)
@@ -76,9 +82,13 @@ function Signup(props) {
     .validate(value)
 
     .then(() => {
-      setCredentials({
-        ...credentials,
+      setFormValues({
+        ...formValues,
         [name]: value,
+      })
+      setFormErrors({
+        ...formErrors,
+        [name]: "",
       })
     })
     .catch(err => {
@@ -87,19 +97,21 @@ function Signup(props) {
         [name]: err.errors[0],
       })
     })
-    setCredentials({
-      ...credentials,
+    setFormValues({
+      ...formValues,
       [name]: value,
     })
   };
 
+  useEffect(() => {
+    formSchema.isValid(formValues).then((valid) => {
+      setDisabled(!valid)
+    })
+  }, [formValues])
 
   const onSubmit = (evt) => {
-    // console.log(evt);
     evt.preventDefault();
-    // console.log(credentials);
-    props.addUser(credentials);
-    history.push('/dashboard');
+    addUser(formValues);
   }
 
   return (
@@ -112,55 +124,27 @@ function Signup(props) {
             type="text"
             name="username"
             onChange={onInputChange}
-            value={credentials.username}
+            value={formValues.username}
           />
         </div>
         <div className='errors'>{formErrors.username}</div>
-
-        {/* <div>
-          <label>Email</label><br />
-          <input
-            type="email"
-            name="email"
-            onChange={onInputChange}
-            value={credentials.email}
-          />
-        </div> */}
-        {/* <div className='errors'>{formErrors.email}</div> */}
         <div>
           <label>Password</label><br />
           <input
             type="password"
             name="password"
             onChange={onInputChange}
-            value={credentials.password}
+            value={formValues.password}
           />
         </div>
         <div className='errors'>{formErrors.password}</div>
-        {/* <div>
-          <label>Verify Password</label><br />
-          <input
-            type="password"
-            name="verifyPassword"
-            onChange={onInputChange}
-            value={credentials.verifyPassword}
-          ></input>
-        </div>
-        <div className='errors'>{formErrors.verifyPassword}</div> */}
-        <button className='btn' type='submit'>Sign-Up</button>
+        <button className='btn' type='submit' disabled={disabled}>Sign-Up</button>
       </form>
     </SignUpBox>
   )
 };
 
-const mapStateToProps = state => {
-  return {
-    username: state.username,
-    password: state.password,
-  };
-};
-
 export default connect(
-  mapStateToProps, 
-  { addUser }
+  null, 
+  {  }
 )(Signup);
