@@ -83,6 +83,7 @@ function ToDo( props ) {
 
   const completed = active ? "line-through black" : "none";
   const textComp = active ? "grey" : "black"
+  
   return (
     <TaskContainer>
       { 
