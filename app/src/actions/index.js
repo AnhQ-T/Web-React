@@ -12,7 +12,9 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO = 'ADD_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
 
-
+export const toggleRedirect = () => {
+  return { type: ACTION_SUCCESS }
+}
 export const deleteToDoLists = ( listID ) => {
     return dispatch => {
       axiosWithAuth()
@@ -87,26 +89,6 @@ export const editToDoList = ( body, id ) => {
       .then(res => {
         // console.log(res);
         dispatch({ type: ACTION_SUCCESS});
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch({ type: ACTION_FAILURE, payload: err.data });
-    });
-  };
-};
-
-
-export const editToDo = ( body, listID, toDoID ) => {
-  const newToDo = {
-    todo: body
-  };
-  return dispatch => {
-    dispatch({ type: EDIT_TODO});
-    axiosWithAuth()
-      .put(`/users/${localStorage.getItem('id')}/lists/${listID}/todos/${toDoID}`, newToDo)
-      .then(res => {
-        console.log(res);
-        dispatch({ type: ACTION_SUCCESS, payload: res.data});
       })
       .catch(err => {
         console.log(err);

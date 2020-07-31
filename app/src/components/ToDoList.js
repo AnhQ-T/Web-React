@@ -69,13 +69,13 @@ const ListContainer = styled.div`
 function ToDoList (props) {
   const [toDos, setToDos] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  console.log(props);
+  // console.log(props);
   const userID = localStorage.getItem('id');
   useEffect(() => {
     axiosWithAuth()
       .get(`/users/${userID}/lists/${props.list.id}/todos`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setToDos(res.data);
       })
   }, [props.redirect]);
