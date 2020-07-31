@@ -96,7 +96,6 @@ function ToDoList (props) {
     props.deleteToDoLists( props.list.id );
 
   };
-{isEditing ? (code) : null}
   return (
       <ListContainer>
         <div id="top">
